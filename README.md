@@ -1,4 +1,6 @@
-> ## EasyResume - 사회적 약자를 위한 이력 관리 시스템
+> ## EasyResume
+>
+> 사회적 약자를 위한 이력 관리 시스템
 
 ### Requirements
 

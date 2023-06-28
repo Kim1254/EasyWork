@@ -1,4 +1,4 @@
-# Speech To Text
+# OpenAI/Whisper
 git+https://github.com/openai/whisper.git
 ffmpeg-python
 ffmpeg

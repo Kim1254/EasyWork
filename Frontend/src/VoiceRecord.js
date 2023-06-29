@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 const VoiceRecord = () => {
@@ -23,21 +24,24 @@ const VoiceRecord = () => {
     formData.append("audio", audioFile);
     // 해당 formData를 백엔드로 전송 /api/voice (임시)
     // formdata 처리 audioFile 데이터의 이름은 일단 voice.mp3 type은 audio/mp3
-    // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패야였습니다." alert
-    await fetch(`http://${process.env.REACT_APP_BACKEND_URL}/api/voice`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((_) => alert("녹음이 성공하였습니다."))
-      .catch((error) => alert(error ?? "녹음에 실패하였습니다."));
+    // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패야였습니다." alert{
+    try {
+      const reulst = await axios.post("/api/test", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (err) {
+      alert(err ?? "녹음에 실패했습니다.");
+    }
   };
 
   return (
-    <div>
+    <form onSubmit={handleSave}>
       <button onClick={startRecording}>Start Recording</button>
       <button onClick={stopRecording}>Stop Recording</button>
       <button onClick={handleSave}>check</button>
-    </div>
+    </form>
   );
 };
 

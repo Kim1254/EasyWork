@@ -8,7 +8,7 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 
 from .models import VoiceRecord
-from .serializers import VoiceRecordSerializer
+from .serializers import VoiceRecordSerializer, ResumeSerializer
 from EasyWork.openai.whisper import SpeechToText
 import io
 
@@ -20,18 +20,34 @@ class VoiceUploadView(APIView):
 
     def post(self, request, *args, **kwargs):
         audio_file = request.FILES.get('audio')
-        serializer = VoiceRecordSerializer(data={'voice': audio_file})
 
-        path = default_storage.save('temp.mp3', ContentFile(audio_file.read()))
-        tmp_file = os.path.join(settings.MEDIA_ROOT, path)
-
-        if serializer.is_valid():
-            audio_file = audio_file.file.read()
+        if audio_file != None:
+            path = default_storage.save('temp.mp3', ContentFile(audio_file.read()))
+            tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+            
             result = SpeechToText(tmp_file)
             print(result['language'], result['result'])
             os.remove(tmp_file)
-            serializer.validated_data['voice'] 
-            serializer.save()
-            return Response({'message': '음성이 성공적으로 저장되었습니다.'}, status=200)
+
+            ai_result=get_data(request.data)
+            result=VoiceRecord()
+            result.name=ai_result['name']
+            result.birthday=ai_result['birthday']
+            result.phone=ai_result['phone']
+            result.email=ai_result['email']
+            result.address=ai_result['address']
+            result.education=ai_result['education']
+            result.career=ai_result['career']
+            result.major_performance=ai_result['major_performance']
+            result.certificate=ai_result['certificate']
+            result.prize=ai_result['prize']
+            result.ability=ai_result['ability']
+            result.military_service=ai_result['military_service']
+            result.cover_letter=ai_result['cover_letter']
+            result.why_apply=ai_result['why_apply']
+            result.save()
+
+            resume = ResumeSerializer(result)
+            return Response(resume.data, status=200)
         else:
-            return Response(serializer.errors, status=400)
+            return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)

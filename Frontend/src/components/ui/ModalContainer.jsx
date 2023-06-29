@@ -20,7 +20,7 @@ export default function ModalContainer({ children, handleClose }) {
       className="fixed top-0 right-0 h-full w-full z-30  flex flex-col justify-center items-center bg-neutral-900/70"
     >
       {/* Modal */}
-      <div className="w-3/5 h-3/5 bg-white">{children}</div>
+      <div className="h-[800px] w-[800px] bg-white">{children}</div>
     </section>
   );
 }

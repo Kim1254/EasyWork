@@ -29,7 +29,8 @@ const VoiceRecord = () => {
     // formdata 처리 audioFile 데이터의 이름은 일단 voice.mp3 type은 audio/mp3
     // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패야였습니다." alert{
     try {
-      const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/voice`, formData, {
+      // Note: localhost:8000은 본인 백엔드 편집에 맞춰 편집하세요.
+      const result = await axios.post(`http://localhost:8000/api/voice`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

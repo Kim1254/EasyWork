@@ -20,18 +20,13 @@ class VoiceUploadView(APIView):
 
     def post(self, request, *args, **kwargs):
         audio_file = request.FILES.get('audio')
-        serializer = VoiceRecordSerializer(data={'voice': audio_file})
 
-        path = default_storage.save('temp.mp3', ContentFile(audio_file.read()))
-        tmp_file = os.path.join(settings.MEDIA_ROOT, path)
-
-        if serializer.is_valid():
-            audio_file = audio_file.file.read()
+        if audio_file != None:
+            path = default_storage.save('temp.mp3', ContentFile(audio_file.read()))
+            tmp_file = os.path.join(settings.MEDIA_ROOT, path)
             result = SpeechToText(tmp_file)
             print(result['language'], result['result'])
             os.remove(tmp_file)
-            serializer.validated_data['voice'] 
-            serializer.save()
             return Response({'message': '음성이 성공적으로 저장되었습니다.'}, status=200)
         else:
-            return Response(serializer.errors, status=400)
+            return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)

@@ -27,14 +27,13 @@ const rec_fields = [
 
 export default function HomePage() {
   const [field, setField] = useState(field_list[0]);
-  const formData = new FormData();
 
   return (
     <>
       <section className="w-full h-full flex flex-col items-center ">
         <FieldInformation field={field} />
         <img className="object-cover mt-[49.03px]" src={"/svg/mic.svg"} width={121.01} height={202.88} />
-        <VoiceRecord field={field} setField={setField} formData={formData} />
+        <VoiceRecord field={field} setField={setField} />
       </section>
     </>
   );

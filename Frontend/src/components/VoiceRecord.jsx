@@ -1,22 +1,18 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useTransition } from "react";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { field_list } from "../pages/HomePage";
-const VoiceRecord = React.memo(({ field, setField }) => {
+import { useNavigate } from "react-router-dom";
+import WaitResume from "./WaitResume";
+const VoiceRecord = React.memo(({ field, setField, setIsLoading }) => {
   // 녹화 시작, 일시 정지, 종료시 이벤트 핸들러 함수
   // 상태와 녹화시간 또한 확인 가능
   // 해당 라이브러리 react-audio-voice-recorder(https://www.npmjs.com/package/react-audio-voice-recorder) MIT LICENCE
-  const {
-    startRecording,
-    stopRecording,
-    togglePauseResume,
-    recordingBlob,
-    isRecording,
-    isPaused,
-    recordingTime,
-    mediaRecorder,
-  } = useAudioRecorder();
+  const { startRecording, stopRecording, togglePauseResume, recordingBlob, isRecording, isPaused, recordingTime } =
+    useAudioRecorder();
   const [audio, setAudio] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleSave = async () => {
     stopRecording();
@@ -26,21 +22,31 @@ const VoiceRecord = React.memo(({ field, setField }) => {
     // 해당 formData를 백엔드로 전송 /api/voice (임시)
     // formdata 처리 audioFile 데이터의 이름은 일단 voice.mp3 type은 audio/mp3
     // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패야였습니다." alert{
-    if (field_list[field_list.length - 1] === field && audio.length === 4) {
-      try {
-        const formData = new FormData();
-        formData.append(field, audioFile);
-        const result = await axios.post(`http://localhost:8000/api/voice`, formData, {
+    if (field_list[field_list.length - 1] === field && audio.length === 5) {
+      setIsLoading(true);
+      const formData = new FormData();
+      for (const file of audio) {
+        formData.append(file.field, file.audioFile);
+      }
+
+      formData.append(field, audioFile);
+
+      axios
+        .post(`http://localhost:8000/api/voice`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+        })
+        .then((res) => {
+          setIsLoading(false);
+
+          return navigate("/resume", { state: { ...res.data } });
+        })
+        .catch(() => {
+          setIsLoading(false);
+          return navigate("/error");
         });
-        console.log(result || result.message);
-      } catch (err) {
-        alert(err ?? "녹음에 실패했습니다.");
-      }
     } else {
-      console.log("123");
       setAudio((prev) => [...prev, { field, audioFile }]);
       setField(field_list[field_list.findIndex((item) => item === field) + 1]);
       return;
@@ -53,13 +59,6 @@ const VoiceRecord = React.memo(({ field, setField }) => {
       handleSave().then((res) => console.log(123));
     }
   }, [recordingBlob]);
-  console.log(123);
-  // 녹음 submit 핸들러
-
-  const handleStart = () => {
-    console.log(123123123);
-    startRecording();
-  };
 
   return (
     <>
@@ -69,7 +68,7 @@ const VoiceRecord = React.memo(({ field, setField }) => {
             width={44}
             height={44}
             src={"/svg/record.svg"}
-            onClick={handleStart}
+            onClick={startRecording}
             alt="record"
             className={`object-cover`}
           />

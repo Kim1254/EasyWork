@@ -1,46 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoModal from "./ui/InfoModal";
 import PortalModal from "./ui/PortalModal";
 import ModalContainer from "./ui/ModalContainer";
-import InformationText from "./ui/InformationText";
 
 const BIG_FONT_STYLE = "text-[55px] tracking-[0px] text-[#4C4A4A] font-extrabold";
-const HILIGHt_FONT_STYLE = "bg-[#7BC278] text-[#FDF8EF]";
+const HILIGHt_FONT_STYLE = "bg-[#7BC278] text-[#FDF8EF] px-[12px] py-[4px]";
 const field_list = [
   {
     field: "name",
     element: (
       <>
-        <div className="mt-[301.22px] text-center tracking-[-1.23px] text-[35px]">안녕하세요!</div>
-        <InformationText hightlightText="이름" text="을 알려주세요!" />
+        <div className=" text-center tracking-[-1.23px] text-[35px]">안녕하세요!</div>
+        <div className={`${BIG_FONT_STYLE} mt-[14.78px]`}>
+          <span className={`${HILIGHt_FONT_STYLE}`}>이름</span>을 알려주세요!
+        </div>
       </>
     ),
   },
   {
     field: "birth_place",
-    element: <InformationText hightlightText="나이, 생년월일, 주소" text="를 알려주세요!" className="mt-[344px]" />,
+    element: (
+      <>
+        <div className={`${BIG_FONT_STYLE} `}>
+          <span className={`${HILIGHt_FONT_STYLE}`}>주소</span>와
+          <span className={`${HILIGHt_FONT_STYLE}`}>생년월일</span>을 알려주세요!
+        </div>
+      </>
+    ),
+  },
+  {
+    field: "phone_number",
+    element: (
+      <>
+        <div className={`${BIG_FONT_STYLE} `}>
+          <span className={`${HILIGHt_FONT_STYLE}`}>연락처</span>를 알려주세요!
+        </div>
+      </>
+    ),
   },
   {
     field: "career",
     element: (
-      <InformationText hightlightText="그동안 경혐해 보신 일자리" text="가 있으실까요?" className="mt-[344px]" />
+      <div className={`${BIG_FONT_STYLE} `}>
+        그동안 경험해 보신 <span className={`${HILIGHt_FONT_STYLE}`}>일자리</span>가 있으실까요?
+      </div>
     ),
   },
   {
     field: "certificate",
     element: (
-      <InformationText hightlightText="가지고 계신 자격증" text="이 있다면 말씀해주세요!" className="mt-[344px]" />
+      <div className={`${BIG_FONT_STYLE} `}>
+        가지고 계신 <span className={`${HILIGHt_FONT_STYLE}`}>자격증</span>이 있다면 말씀해주세요!
+      </div>
     ),
   },
   {
     field: "self_intro",
     element: (
-      <InformationText
-        hightlightText="어떤사람인지 자유롭게 말씀해주세요"
-        text="마지막으로, 본인이 "
-        reverse={true}
-        className={"mt-[344px]"}
-      />
+      <div className={`${BIG_FONT_STYLE}`}>
+        마지막으로, 본인이 <span className={`${HILIGHt_FONT_STYLE}`}>어떤 사람인지 자유롭게 말씀해주세요!</span>
+      </div>
     ),
   },
 ];
@@ -59,6 +78,7 @@ export default function FieldInformation({ field }) {
           </ModalContainer>
         </PortalModal>
       )}
+
       <div>{currentField.element}</div>
     </>
   );

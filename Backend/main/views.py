@@ -29,23 +29,24 @@ class VoiceUploadView(APIView):
             print(result['language'], result['result'])
             os.remove(tmp_file)
 
-            ai_result = get_data(request.data)  #딕셔너리로 반환
+            #ai_result = get_data(request.data)  #딕셔너리로 반환
+            ai_result={'name':'이름','birthday':'생일','phone':'전화번호'}
+
             result=VoiceRecord()
             result.name=ai_result['name']
             result.birthday=ai_result['birthday']
             result.phone=ai_result['phone']
-            result.email=ai_result['email']
-            result.address=ai_result['address']
-            result.education=ai_result['education']
-            result.career=ai_result['career']
-            result.major_performance=ai_result['major_performance']
-            result.certificate=ai_result['certificate']
-            result.prize=ai_result['prize']
-            result.ability=ai_result['ability']
-            result.military_service=ai_result['military_service']
-            result.cover_letter=ai_result['cover_letter']
-            result.why_apply=ai_result['why_apply']
-            result.save()
+            # result.email=ai_result['email']
+            # result.address=ai_result['address']
+            # result.education=ai_result['education']
+            # result.career=ai_result['career']
+            # result.major_performance=ai_result['major_performance']
+            # result.certificate=ai_result['certificate']
+            # result.prize=ai_result['prize']
+            # result.ability=ai_result['ability']
+            # result.military_service=ai_result['military_service']
+            # result.cover_letter=ai_result['cover_letter']
+            # result.why_apply=ai_result['why_apply']
 
             resume = ResumeSerializer(result)
             return Response(resume.data, status=200)

@@ -17,20 +17,24 @@ const VoiceRecord = () => {
   } = useAudioRecorder();
 
   // 녹음 submit 핸들러
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault();
     const audioFile = new File([recordingBlob], "voice.mp3", { type: "audio/mp3" });
     const formData = new FormData();
 
     formData.append("audio", audioFile);
+    formData.append("text", "text");
+
     // 해당 formData를 백엔드로 전송 /api/voice (임시)
     // formdata 처리 audioFile 데이터의 이름은 일단 voice.mp3 type은 audio/mp3
     // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패야였습니다." alert{
     try {
-      const reulst = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/voice`, formData, {
+      const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/voice`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(result.message);
     } catch (err) {
       alert(err ?? "녹음에 실패했습니다.");
     }

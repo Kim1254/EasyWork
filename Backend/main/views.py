@@ -8,9 +8,8 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 
 from .models import VoiceRecord
-from .serializers import VoiceRecordSerializer, ResumeSerializer
+from .serializers import ResumeSerializer
 from EasyWork.openai.whisper import SpeechToText
-import io
 
 # Create your views here.
 class VoiceUploadView(APIView):

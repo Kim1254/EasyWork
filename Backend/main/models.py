@@ -19,4 +19,3 @@ class VoiceRecord(models.Model):
     military_service = models.CharField(max_length=1000, null=True)
     cover_letter = models.CharField(max_length=2000, null=True)
     why_apply = models.CharField(max_length=2000, null=True)
-

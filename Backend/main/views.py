@@ -50,6 +50,7 @@ class VoiceUploadView(APIView):
 
                 for k, v in view_dict.items():
                     setattr(VRView, k, v)
+
                 os.remove(tmp_file)
             resume = ResumeSerializer(VRView)
             return Response(resume.data, status=200)

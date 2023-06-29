@@ -27,7 +27,6 @@ const rec_fields = [
 
 export default function HomePage() {
   const [field, setField] = useState(field_list[0]);
-  const formData = new FormData();
 
   return (
     <>

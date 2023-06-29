@@ -29,6 +29,7 @@ class VoiceUploadView(APIView):
             audio_file = audio_file.file.read()
             result = SpeechToText(tmp_file)
             print(result['language'], result['result'])
+            os.remove(tmp_file)
             serializer.validated_data['voice'] 
             serializer.save()
             return Response({'message': '음성이 성공적으로 저장되었습니다.'}, status=200)

@@ -29,7 +29,7 @@ class VoiceUploadView(APIView):
             print(result['language'], result['result'])
             os.remove(tmp_file)
 
-            ai_result=get_data(request.data)
+            ai_result = get_data(request.data)  #딕셔너리로 반환
             result=VoiceRecord()
             result.name=ai_result['name']
             result.birthday=ai_result['birthday']

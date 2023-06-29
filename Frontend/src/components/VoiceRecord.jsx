@@ -18,8 +18,7 @@ const VoiceRecord = React.memo(({ field, setField }) => {
   } = useAudioRecorder();
   const [audio, setAudio] = useState([]);
 
-  const handleSave = async (e) => {
-    e.preventDefault();
+  const handleSave = async () => {
     stopRecording();
     console.log(213);
     const audioFile = new File([recordingBlob], `${field}.mp3`, { type: "audio/mp3" });

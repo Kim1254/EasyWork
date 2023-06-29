@@ -20,12 +20,33 @@ class VoiceUploadView(APIView):
     def post(self, request):
         audio_dict = request.FILES
 
+        def parse(key, text: dict):
+            result = {}
+            if key == 'birth_place':
+                spl = text['result'].split(' ')
+                result['birth'] = spl[0]
+
+                if len(spl) > 2:
+                    str2 = spl[1]
+                    for strings in spl[2:]:
+                        str2 = str2 + ' ' + strings
+                    result['place'] = str2
+                else:
+                    result['place'] = spl[1]
+            else:
+                result[key] = text
+            return result
+
         if len(audio_dict) > 1:
             VRView=VoiceRecord()
+
             for key, value in audio_dict.items():
                 path = default_storage.save('temp.mp3', ContentFile(value.read()))
                 tmp_file = os.path.join(settings.MEDIA_ROOT, path)
-                setattr(VRView, key, SpeechToText(tmp_file))
+                view_dict = parse(key, SpeechToText(tmp_file))
+
+                for k, v in view_dict.items():
+                    setattr(VRView, k, v)
                 os.remove(tmp_file)
             resume = ResumeSerializer(VRView)
             return Response(resume.data, status=200)

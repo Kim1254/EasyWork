@@ -6,17 +6,10 @@ class ResumeSerializer(serializers.ModelSerializer):
         model = VoiceRecord
         fields = [
                 'name', 
-                'birthday', 
-                'phone', 
-                'email', 
-                'address', 
-                'education', 
-                'career', 
-                'major_performance', 
-                'certificate', 
-                'prize', 
-                'ability', 
-                'military_service',
-                'cover_letter',
-                'why_apply',
+                'birth', 
+                'place',
+                'career',
+                'phone_number',
+                'certificate',
+                'self_intro',
                 ]

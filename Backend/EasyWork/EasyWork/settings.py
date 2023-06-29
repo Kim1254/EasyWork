@@ -70,6 +70,12 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.MultiPartParser',
+    ]
+}
+
 WSGI_APPLICATION = 'EasyWork.wsgi.application'
 
 

@@ -18,37 +18,17 @@ class VoiceUploadView(APIView):
     # MultiPartParser : form-data 요청에서 파일을 파싱하는 데 사용
     # FormParser : 폼 데이터를 파싱하는 데 사용
 
-    def post(self, request, *args, **kwargs):
-        audio_file = request.FILES.get('audio')
+    def post(self, request):
+        audio_dict = request.FILES
 
-        if audio_file != None:
-            path = default_storage.save('temp.mp3', ContentFile(audio_file.read()))
-            tmp_file = os.path.join(settings.MEDIA_ROOT, path)
-            
-            result = SpeechToText(tmp_file)
-            print(result['language'], result['result'])
-            os.remove(tmp_file)
-
-            #ai_result = get_data(request.data)  #딕셔너리로 반환
-            ai_result={'name':'이름','birthday':'생일','phone':'전화번호'}
-
-            result=VoiceRecord()
-            result.name=ai_result['name']
-            result.birthday=ai_result['birthday']
-            result.phone=ai_result['phone']
-            # result.email=ai_result['email']
-            # result.address=ai_result['address']
-            # result.education=ai_result['education']
-            # result.career=ai_result['career']
-            # result.major_performance=ai_result['major_performance']
-            # result.certificate=ai_result['certificate']
-            # result.prize=ai_result['prize']
-            # result.ability=ai_result['ability']
-            # result.military_service=ai_result['military_service']
-            # result.cover_letter=ai_result['cover_letter']
-            # result.why_apply=ai_result['why_apply']
-
-            resume = ResumeSerializer(result)
+        if len(audio_dict) > 1:
+            VRView=VoiceRecord()
+            for key, value in audio_dict.items():
+                path = default_storage.save('temp.mp3', ContentFile(value.read()))
+                tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+                setattr(VRView, key, SpeechToText(tmp_file))
+                os.remove(tmp_file)
+            resume = ResumeSerializer(VRView)
             return Response(resume.data, status=200)
         else:
             return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)

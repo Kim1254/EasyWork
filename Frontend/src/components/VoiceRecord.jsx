@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { field_list } from "../pages/HomePage";
 const VoiceRecord = React.memo(({ field, setField, formData }) => {
@@ -17,14 +17,10 @@ const VoiceRecord = React.memo(({ field, setField, formData }) => {
     mediaRecorder,
   } = useAudioRecorder();
   const [audio, setAudio] = useState([]);
-  console.log(123);
-  // 녹음 submit 핸들러
-  const handleSave = async (e) => {
-    e.preventDefault();
-    stopRecording();
-    console.log(213);
-    const audioFile = new File([recordingBlob], "voice.mp3", { type: "audio/mp3" });
-
+  const handleSave = async () => {
+    const formData = new FormData();
+    const audioFile = new File([recordingBlob], `${field}.mp3`, { type: "audio/mp3" });
+    console.log(audioFile);
     // 해당 formData를 백엔드로 전송 /api/voice (임시)
     // formdata 처리 audioFile 데이터의 이름은 일단 voice.mp3 type은 audio/mp3
     // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패야였습니다." alert{
@@ -51,18 +47,29 @@ const VoiceRecord = React.memo(({ field, setField, formData }) => {
     }
   };
 
+  useEffect(() => {
+    if (recordingBlob) {
+      console.log(recordingBlob);
+      handleSave().then((res) => console.log(123));
+    }
+  }, [recordingBlob]);
+  console.log(123);
+  // 녹음 submit 핸들러
+
+  const handleStart = () => {
+    console.log(123123123);
+    startRecording();
+  };
+
   return (
     <>
-      <form
-        onSubmit={handleSave}
-        className="h-[68px] mt-[34.64px] w-[323px] rounded-full bg-[#EEE8DA] border-none flex items-center justify-center"
-      >
+      <form className="h-[68px] mt-[34.64px] w-[323px] rounded-full bg-[#EEE8DA] border-none flex items-center justify-center">
         {recordingTime === 0 ? (
           <img
             width={44}
             height={44}
             src={"/svg/record.svg"}
-            onClick={startRecording}
+            onClick={handleStart}
             alt="record"
             className={`object-cover`}
           />
@@ -99,7 +106,7 @@ const VoiceRecord = React.memo(({ field, setField, formData }) => {
               />
             )}
 
-            <button type="submit">
+            <button onClick={stopRecording}>
               <img width={44} height={44} src={"/svg/audio-submit.svg"} alt="audio submit" />
             </button>
           </>

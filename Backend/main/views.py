@@ -19,7 +19,7 @@ class VoiceUploadView(APIView):
 
     def post(self, request):
         audio_dict = request.FILES
-
+        print(audio_dict)
         def parse(key, text: dict):
             result = {}
             if key == 'birth_place':
@@ -31,13 +31,16 @@ class VoiceUploadView(APIView):
                     for strings in spl[2:]:
                         str2 = str2 + ' ' + strings
                     result['place'] = str2
+                elif len(spl) <= 1:
+                    result['birth'] = ''
+                    result['place'] = ''
                 else:
                     result['place'] = spl[1]
             else:
                 result[key] = text
             return result
 
-        if len(audio_dict) > 1:
+        if len(audio_dict) > 0:
             VRView=VoiceRecord()
 
             for key, value in audio_dict.items():

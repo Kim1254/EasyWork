@@ -19,26 +19,6 @@ class VoiceUploadView(APIView):
 
     def post(self, request):
         audio_dict = request.FILES
-        print(audio_dict)
-        def parse(key, text: dict):
-            result = {}
-            if key == 'birth_place':
-                spl = text['result'].split(' ')
-                result['birth'] = spl[0]
-
-                if len(spl) > 2:
-                    str2 = spl[1]
-                    for strings in spl[2:]:
-                        str2 = str2 + ' ' + strings
-                    result['place'] = str2
-                elif len(spl) <= 1:
-                    result['birth'] = ''
-                    result['place'] = ''
-                else:
-                    result['place'] = spl[1]
-            else:
-                result[key] = text
-            return result
 
         if len(audio_dict) > 0:
             VRView=VoiceRecord()
@@ -56,3 +36,29 @@ class VoiceUploadView(APIView):
             return Response(resume.data, status=200)
         else:
             return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)
+
+def parse(key, text):
+    result = {}
+
+    if key == 'birth_place':
+        spl = text['result'].split(' ')
+        result['place'] = {'result': spl[0]}
+
+        print("test:", len(spl))
+
+        if len(spl) > 2:
+            str2 = spl[1]
+            for strs in spl[2:]:
+                str2 = str2 + ' ' + strs
+            result['birth'] = {'result': str2}
+        elif len(spl) == 2:
+            result['birth'] = {'result': spl[1]}
+        else:
+            result = {
+                'place': {'result': ''},
+                'birth': {'result': ''}
+            }
+    else:
+        result = {key: {'result': text['result']}}
+
+    return result

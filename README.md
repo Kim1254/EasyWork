@@ -37,6 +37,8 @@
 #### 백엔드
 
 - [OpenAI/Whisper](https://github.com/openai/whisper)
+- [Django](https://github.com/django/django)
+- [Django Rest Framework](https://github.com/encode/django-rest-framework)
 
 #### 프론트엔드
 

@@ -21,7 +21,7 @@ const VoiceRecord = React.memo(({ field, setField, setIsLoading }) => {
 
     // 해당 formData를 백엔드로 전송 /api/voice (임시)
     // formdata 처리 audioFile 데이터의 이름은 일단 voice.mp3 type은 audio/mp3
-    // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패야였습니다." alert{
+    // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패하였습니다." alert{
     if (field_list[field_list.length - 1] === field && audio.length === 5) {
       setIsLoading(true);
       const formData = new FormData();

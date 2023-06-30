@@ -18,5 +18,10 @@ def SpeechToText(audio):
     # decode the audio
     options = whisper.DecodingOptions(fp16=torch.cuda.is_available())
     result = whisper.decode(model, mel, options)
+
+    lang = max(probs, key=probs.get)
     
-    return {'language': max(probs, key=probs.get), 'result': result.text}
+    if not lang == 'ko':
+        return {'result': ''}
+    
+    return {'result': result.text}

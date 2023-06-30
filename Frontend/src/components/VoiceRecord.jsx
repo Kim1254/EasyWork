@@ -11,12 +11,22 @@ const VoiceRecord = React.memo(({ field, setField, setIsLoading }) => {
   const { startRecording, stopRecording, togglePauseResume, recordingBlob, isRecording, isPaused, recordingTime } =
     useAudioRecorder();
   const [audio, setAudio] = useState([]);
-
+  const [notification, setNotification] = useState(false);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    let handler;
+    if (notification) {
+      handler = () =>
+        setTimeout(() => {
+          setNotification(false);
+        }, 1500);
+      handler();
+    }
+    return clearTimeout(handler);
+  }, [notification]);
   const handleSave = async () => {
     stopRecording();
-    console.log(213);
+
     const audioFile = new File([recordingBlob], `${field}.mp3`, { type: "audio/mp3" });
 
     // 해당 formData를 백엔드로 전송 /api/voice (임시)
@@ -39,15 +49,17 @@ const VoiceRecord = React.memo(({ field, setField, setIsLoading }) => {
         })
         .then((res) => {
           setIsLoading(false);
-
+          setNotification(true);
           return navigate("/resume", { state: { ...res.data } });
         })
         .catch(() => {
           setIsLoading(false);
+
           return navigate("/error");
         });
     } else {
       setAudio((prev) => [...prev, { field, audioFile }]);
+      setNotification(true);
       setField(field_list[field_list.findIndex((item) => item === field) + 1]);
       return;
     }
@@ -111,6 +123,17 @@ const VoiceRecord = React.memo(({ field, setField, setIsLoading }) => {
           </>
         )}
       </form>
+      {notification && (
+        <div className="mt-[70px] bg-[#8F8E8E] rounded-[29px] text-white px-[26px] py-[12px] ">
+          말한 내용이 저장되었어요!
+        </div>
+      )}
+      {field !== "name" && !notification && (
+        <div className="mt-[70px] text-[30px]">
+          <span className="tracking-[-1.05px] text-[#4C4A4A] ">{field_list.findIndex((item) => item === field)} </span>
+          <span className="tracking-[-1.05px] text-[#B4B4B4]">/ {field_list.length - 1}</span>
+        </div>
+      )}
     </>
   );
 });

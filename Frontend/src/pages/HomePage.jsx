@@ -28,15 +28,8 @@ const rec_fields = [
 
 export default function HomePage() {
   const [field, setField] = useState(field_list[0]);
-  const [prevField, setPrevField] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const prevIndex = field_list.findIndex((item) => item === field) - 1;
-    if (prevIndex >= 0) {
-      setPrevField(field_list[prevIndex]);
-    }
-  }, [field]);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -47,12 +40,6 @@ export default function HomePage() {
           <FieldInformation field={field} />
           <img className="object-cover mt-[49.03px]" src={"/svg/mic.svg"} width={121.01} height={202.88} />
           <VoiceRecord field={field} setField={setField} setIsLoading={setIsLoading} />
-          <div className="mt-[30px] text-[30px]">
-            <span className="tracking-[-1.05px] text-[#4C4A4A] ">
-              {field_list.findIndex((item) => item === field)}{" "}
-            </span>
-            <span className="tracking-[-1.05px] text-[#B4B4B4]">/ {field_list.length}</span>
-          </div>
         </section>
       )}
     </>

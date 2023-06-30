@@ -17,10 +17,10 @@ export default function ModalContainer({ children, handleClose }) {
     // Modal의 Container
     <section
       onClick={handleModalClose}
-      className="fixed top-0 right-0 h-full w-full z-30  flex flex-col justify-center items-center bg-neutral-900/70"
+      className="fixed top-0 right-0 h-full w-full z-30  flex flex-col justify-center items-center  bg-neutral-500/50"
     >
       {/* Modal */}
-      <div className="h-[800px] w-[800px] bg-white">{children}</div>
+      <div className="h-[800px] w-[800px] bg-white z-60">{children}</div>
     </section>
   );
 }

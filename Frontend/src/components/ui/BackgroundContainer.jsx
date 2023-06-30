@@ -5,7 +5,7 @@ export default function BackgroundContainer({ children, wave = true }) {
     <section className="fixed -z-20    w-screen h-screen  overflow-hidden bg-[#FDF8EF]">
       {/* https://s.muz.li/ODM2MGYyMzQz */}
       {wave && (
-        <div className="absolute -bottom-44 w-screen overflow-hidden -z-10">
+        <div className="absolute -bottom-48 w-screen overflow-hidden -z-10">
           <svg
             width="100%"
             height="100%"

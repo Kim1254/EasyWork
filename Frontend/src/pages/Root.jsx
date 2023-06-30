@@ -4,13 +4,18 @@ import BackgroundContainer from "../components/ui/BackgroundContainer";
 
 export default function Root() {
   const location = useLocation();
+
   console.log(location);
   return (
     <>
-      <BackgroundContainer wave={location.pathname !== "/resume"}>
-        <Header />
+      {location.pathname !== "/resume" ? (
+        <BackgroundContainer>
+          <Header />
+          <Outlet />
+        </BackgroundContainer>
+      ) : (
         <Outlet />
-      </BackgroundContainer>
+      )}
     </>
   );
 }

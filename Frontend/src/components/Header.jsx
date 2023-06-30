@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <header className="fixed mt-[110px] ml-[110px] ">
-      <Link className="flex items-center gap-[16px]" v href={"/"}>
-        <img width={52} height={52} src={"/svg/logo.svg"} alt="이지웤의 로고입니다." />
-        <img width={248.14} height={30.73} alt="이지웤" src={"/svg/logo-name.svg"} />
+      <Link href={"/"}>
+        <img src="/svg/logo.svg" width={175} height={87} aly="쉬운, 이력서" />
       </Link>
     </header>
   );

@@ -46,6 +46,52 @@
 - [tailwindcss](https://tailwindcss.com/)
 - [framer-motion](https://www.npmjs.com/package/framer-motion)
 - [react-spinners](https://www.npmjs.com/package/react-spinners)
-- [axios](https://axios-http.com/kr/docs/intro)
-- [react](https://ko.legacy.reactjs.org/)
-- [react-router-dom](https://reactrouter.com/en/main)
+
+---
+### 실행 화면
+#### 1. 접속 시 메인 화면
+<img width="960" alt="image" src="https://github.com/dudtlstm/EasyWork/assets/102219328/a714bc45-6217-4b64-ae3d-f7a41ce27365">
+<br>
+
+###### - 다른 부가적인 것 없이 사용 방법에 대한 안내 모달창
+<br>
+<br>
+
+#### 2. 이력서 내용 녹음 화면
+<br>
+
+  ##### 2-1. 녹음 재생 전
+  <img width="960" alt="image" src="https://github.com/dudtlstm/EasyWork/assets/102219328/96c4c5dd-d5ce-4aa7-ac64-b0dcae96ebc7">
+  <br>
+  <br>
+  
+  ##### 2-2. 녹음 중
+  <img width="960" alt="image" src="https://github.com/dudtlstm/EasyWork/assets/102219328/752c2d94-d577-4c47-8b2c-2187ba2700b4">
+  <br>
+  <br>
+  
+  ##### 2-3. 녹음 완료
+  <img width="960" alt="image" src="https://github.com/dudtlstm/EasyWork/assets/102219328/e3956966-8d91-430b-a309-f728dc205bbd">
+  <br>
+  
+  ###### - 질문 내용 변경과 동시에 녹음이 저장되었다는 문구 표시
+  <br>
+  <br>
+  <img width="960" alt="image" src="https://github.com/dudtlstm/EasyWork/assets/102219328/b885c6da-2e24-4582-837c-27f21398fa1e">
+  <br>
+  
+  ###### - 질문 진행도 표시
+<br>
+<br>
+
+#### 3. 이력서 제작 중 안내 화면
+<img width="960" alt="image" src="https://github.com/dudtlstm/EasyWork/assets/102219328/e0173036-23d8-421d-9b72-dd743d3c37da">
+
+<br>
+<br>
+
+#### 4. 이력서 제작
+<img width="960" alt="image" src="https://github.com/dudtlstm/EasyWork/assets/102219328/81992876-d5ad-4144-9148-024767d53536">
+
+###### 녹음된 내용을 바탕으로 이력서 내용을 저장
+

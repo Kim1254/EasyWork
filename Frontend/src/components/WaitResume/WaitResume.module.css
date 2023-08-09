@@ -1,0 +1,35 @@
+.section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 55px;
+  letter-spacing: 0px;
+  --tw-text-opacity: 1;
+  color: rgb(76 74 74 / var(--tw-text-opacity));
+  font-weight: 800;
+  margin-top: 14.78;
+}
+
+.title_highlight {
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 194 120 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(253 248 239 / var(--tw-text-opacity));
+  padding: 12px 4px;
+}
+
+.wait_text {
+  text-align: center;
+  letter-spacing: -1.23px;
+  font-size: 35px;
+}
+
+.pulse_loader {
+  margin-top: 63px;
+}

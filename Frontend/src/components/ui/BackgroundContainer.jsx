@@ -6,23 +6,15 @@ export default function BackgroundContainer({ children, wave = true }) {
       {/* https://s.muz.li/ODM2MGYyMzQz */}
       {wave && (
         <div className="absolute -bottom-48 w-screen overflow-hidden -z-10">
-          <svg
-            width="100%"
-            height="100%"
-            id="svg"
-            viewBox="0 0 1440 490"
-            xmlns="http://www.w3.org/2000/svg"
-            filter="44"
-            className="transition duration-300 ease-in-out delay-150"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="2279.734" height="575.97" viewBox="0 0 2279.734 575.97">
             <path
-              d="M 0,500 C 0,500 0,250 0,250 C 120.85714285714283,196.89285714285714 241.71428571428567,143.78571428571428 377,165 C 512.2857142857143,186.21428571428572 661.9999999999999,281.75 779,323 C 896.0000000000001,364.25 980.2857142857142,351.2142857142857 1085,330 C 1189.7142857142858,308.7857142857143 1314.857142857143,279.3928571428571 1440,250 C 1440,250 1440,500 1440,500 Z"
-              stroke="none"
-              strokeWidth="0"
+              id="패스_53"
+              data-name="패스 53"
+              d="M-5952,4394.925s437.173-65.9,739.026,0,406.819,90.347,707.356,109.1,569.352-152.755,569.352-152.755v311.97H-5952Z"
+              transform="translate(6084 -4219.269)"
               fill="#7bc278"
-              fillOpacity="1"
-              className="transition-all duration-300 ease-in-out delay-150 wave blur-md"
-            ></path>
+              opacity="0.97"
+            />
           </svg>
         </div>
       )}

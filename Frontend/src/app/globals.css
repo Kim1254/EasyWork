@@ -18,10 +18,73 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+.frame {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  margin-top: -200px;
+  margin-left: -200px;
+  border-radius: 2px;
+  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+.wrap {
+  width: 300px; /* 원래 너비 */
+  height: 150px; /* 변경된 높이 */
+  position: relative;
+  overflow: hidden;
+  border-radius: 0; /* 원의 효과 제거 */
+  background: rgb(171, 255, 248);
+  background: linear-gradient(180deg, rgba(171, 255, 248, 1) 37%, rgba(255, 228, 192, 1) 81%);
+  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  transform: translate3d(0, 0, 0);
+}
+
+.wave {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 60%;
+  left: -100px;
+  border-radius: 43%;
+  animation: drift 4s infinite linear;
+  background: rgba(255, 255, 255, 0.4);
+}
+.wave2 {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 60%;
+  left: -200px;
+  border-radius: 43%;
+  animation: drift 4s infinite linear;
+  background: rgba(255, 255, 255, 0.4);
+}
+.wave3 {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 60%;
+  left: -60px;
+  border-radius: 43%;
+  animation: drift 4s infinite linear;
+  background: rgba(255, 255, 255, 0.4);
+}
+.wave.layer_1 {
+  animation: drift 8s infinite linear;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes drift {
+  100% {
+    transform: rotate(-360deg);
+  }
 }

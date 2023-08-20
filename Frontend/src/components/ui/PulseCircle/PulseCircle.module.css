@@ -1,0 +1,39 @@
+.blob {
+  background: #caecc4;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 462px;
+  width: 462px;
+  filter: blur(37px);
+
+  transform: scale(1);
+  animation: pulse 2s infinite;
+}
+
+.small_blob {
+  background: #efffeb;
+  border-radius: 50%;
+
+  height: 338px;
+  width: 338px;
+  filter: blur(40px);
+
+  transform: scale(1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.8);
+  }
+}

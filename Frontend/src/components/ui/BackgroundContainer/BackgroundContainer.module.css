@@ -1,6 +1,24 @@
 .wave {
   animation: pathAnim-0 14s;
   animation-timing-function: linear;
+  transition-delay: 150ms;
+  filter: blur(44px);
+  transition-duration: 300ms;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  animation-iteration-count: infinite;
+}
+
+.wave_sub {
+  animation: pathAnim-0 14s;
+  animation-timing-function: linear;
+  transition-delay: 150ms;
+  filter: blur(30px);
+  transition-duration: 300ms;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
   animation-iteration-count: infinite;
 }
 @keyframes pathAnim-0 {

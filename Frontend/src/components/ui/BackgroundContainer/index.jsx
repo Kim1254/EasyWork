@@ -1,5 +1,5 @@
 import React from "react";
-
+import styles from "./BackgroundContainer.module.css";
 export default function BackgroundContainer({ children, wave = true }) {
   return (
     <section className="fixed -z-20    w-screen h-screen  overflow-hidden bg-[#FDF8EF]">
@@ -21,11 +21,11 @@ export default function BackgroundContainer({ children, wave = true }) {
                 strokeWidth="0"
                 fill="#7bc278"
                 fillOpacity="0.97"
-                className="transition-all duration-300 ease-in-out delay-150 wave blur-[44px]"
+                className={styles.wave}
               ></path>
             </svg>
           </div>
-          <div className="fixed -bottom-6 w-screen overflow-hidden -z-20 ">
+          <div className="fixed -bottom-36 w-screen overflow-hidden -z-20 ">
             <svg
               width="100%"
               height="100%"
@@ -40,7 +40,7 @@ export default function BackgroundContainer({ children, wave = true }) {
                 strokeWidth="0"
                 fill="#e6eeda"
                 fillOpacity="1"
-                className="transition-all duration-300 ease-in-out delay-150 wave blur-[30px]"
+                className={styles.wave_sub}
               ></path>
             </svg>
           </div>

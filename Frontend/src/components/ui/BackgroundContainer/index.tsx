@@ -1,6 +1,12 @@
 import React from "react";
 import styles from "./BackgroundContainer.module.css";
-export default function BackgroundContainer({ children, wave = true }) {
+
+type Props = {
+  children: React.ReactNode;
+  wave: boolean;
+};
+
+export default function BackgroundContainer({ children, wave = true }: Props) {
   return (
     <section className="fixed -z-20    w-screen h-screen  overflow-hidden bg-[#FDF8EF]">
       {/* https://s.muz.li/ODM2MGYyMzQz */}

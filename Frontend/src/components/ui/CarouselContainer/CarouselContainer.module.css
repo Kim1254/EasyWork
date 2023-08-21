@@ -17,16 +17,16 @@
 }
 
 .item {
-  width: 1009px;
-  height: 568px;
+  width: 950px;
+  height: 530px;
   /* UI Properties */
   background: #7bc2771f 0% 0% no-repeat padding-box;
   border-radius: 91px;
   opacity: 1;
 }
 .container {
-  width: 1009px;
-  height: 568px;
+  width: 950px;
+  height: 530px;
   /* UI Properties */
   background: #7bc2771f 0% 0% no-repeat padding-box;
   border-radius: 91px;

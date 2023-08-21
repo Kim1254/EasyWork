@@ -1,0 +1,38 @@
+.section {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-around;
+  padding: 11rem 12rem 0rem 12rem;
+}
+
+.title {
+  color: #1e1e1e;
+  letter-spacing: -1.14px;
+  color: #1e1e1e;
+  opacity: 1;
+  font-size: 52px;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+.text_container {
+  padding-top: 6.5rem;
+}
+.content {
+  text-align: left;
+  font-size: 20px;
+  letter-spacing: 0.12px;
+  color: #1e1e1e;
+  opacity: 1;
+  margin-bottom: 5.5rem;
+}
+
+.resume_link {
+  padding: 1.1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #1e1e1e;
+  border-radius: 30px;
+  opacity: 1;
+}

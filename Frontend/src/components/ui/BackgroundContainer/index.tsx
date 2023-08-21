@@ -3,16 +3,16 @@ import styles from "./BackgroundContainer.module.css";
 
 type Props = {
   children: React.ReactNode;
-  wave: boolean;
+  wave?: boolean;
 };
 
 export default function BackgroundContainer({ children, wave = true }: Props) {
   return (
-    <section className="fixed -z-20    w-screen h-screen  overflow-hidden bg-[#FDF8EF]">
+    <section className={styles.section_container}>
       {/* https://s.muz.li/ODM2MGYyMzQz */}
       {wave && (
         <>
-          <div className="absolute -bottom-48 w-screen overflow-hidden   -z-10">
+          <div className={styles.wave_container1}>
             <svg
               width="100%"
               height="100%"
@@ -31,7 +31,7 @@ export default function BackgroundContainer({ children, wave = true }: Props) {
               ></path>
             </svg>
           </div>
-          <div className="fixed -bottom-36 w-screen overflow-hidden -z-20 ">
+          <div className={styles.wave_container2}>
             <svg
               width="100%"
               height="100%"

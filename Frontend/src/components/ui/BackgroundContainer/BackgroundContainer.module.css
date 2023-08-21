@@ -1,3 +1,27 @@
+.section_container {
+  position: fixed;
+  z-index: -20;
+  width: 100vw;
+  overflow: hidden;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.wave_container1 {
+  position: absolute;
+  bottom: -12rem /* -192px */;
+  width: 100vw;
+  overflow: hidden;
+  z-index: -10;
+}
+.wave_container2 {
+  position: absolute;
+  bottom: -9rem /* -144px */;
+  width: 100vw;
+  overflow: hidden;
+  z-index: -10;
+}
+
 .wave {
   animation: pathAnim-0 14s;
   animation-timing-function: linear;

@@ -46,7 +46,7 @@ export default function BackgroundContainer({ children, wave = true }: Props) {
                 strokeWidth="0"
                 fill="#e6eeda"
                 fillOpacity="1"
-                className={styles.wave_sub}
+                className={styles.wave}
               ></path>
             </svg>
           </div>

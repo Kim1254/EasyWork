@@ -11,10 +11,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <BackgroundContainer>
-          <Header />
-          {children}
-        </BackgroundContainer>
+        <Header />
+        {children}
       </body>
     </html>
   );

@@ -18,29 +18,7 @@ export default function IntroduceService() {
               />
             </svg>
           </div>
-          <div>
-            <h5 className={styles.item_title}>재생하기</h5>
-            <p className={styles.item_content}>
-              말한 내용을 다시
-              <br />
-              들을 수 있어요
-            </p>
-          </div>
-        </div>
-        <div className={styles.item_container}>
-          <div className={styles.icon_container}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="55" height="54" viewBox="0 0 55 54">
-              <ellipse
-                id="타원_56"
-                cx="27"
-                cy="27.5"
-                rx="27"
-                ry="27.5"
-                transform="translate(0 54) rotate(-90)"
-                fill="#7bc277"
-              />
-            </svg>
-          </div>
+
           <div>
             <h5 className={styles.item_title}>녹음하기</h5>
             <p className={styles.item_content}>

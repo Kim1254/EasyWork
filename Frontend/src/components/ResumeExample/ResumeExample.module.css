@@ -16,6 +16,7 @@
   opacity: 1;
   margin-top: 88px;
   font-size: 40px;
+  font-weight: 700;
 }
 
 .title {
@@ -24,6 +25,7 @@
   color: #1e1e1e;
   font-size: 52px;
   margin-bottom: 40px;
+  font-weight: 800;
 }
 
 .resume {

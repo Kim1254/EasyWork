@@ -58,6 +58,7 @@
   color: hsl(0, 0%, 12%);
   opacity: 1;
   text-align: center;
+  font-weight: 700;
   margin-bottom: 12px;
 }
 

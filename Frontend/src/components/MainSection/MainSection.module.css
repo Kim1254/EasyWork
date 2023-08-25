@@ -26,9 +26,10 @@
   letter-spacing: -1.14px;
   color: #1e1e1e;
   opacity: 1;
+  font-weight: 800;
   font-size: 52px;
   line-height: 70px;
-  font-weight: 400;
+
   margin-bottom: 1.5rem;
 }
 
@@ -37,7 +38,7 @@
   color: #1e1e1e;
   opacity: 1;
   font-size: 44px;
-  font-weight: 400;
+  font-weight: 700;
   margin-bottom: 1.5rem;
 }
 

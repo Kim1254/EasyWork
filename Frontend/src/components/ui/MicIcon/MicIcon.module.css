@@ -1,0 +1,12 @@
+.mic_container {
+  position: relative;
+  width: 388px;
+  height: 388px;
+}
+
+.mic {
+  position: absolute;
+  top: 109px;
+  left: 140px;
+  z-index: 100;
+}

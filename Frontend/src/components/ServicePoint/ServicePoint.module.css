@@ -15,6 +15,7 @@
   letter-spacing: -0.97px;
   line-height: 62px;
   color: #1e1e1e;
+  font-weight: 700;
   margin-bottom: 100px;
 }
 
@@ -22,6 +23,7 @@
   font-size: 52px;
   letter-spacing: -1.14px;
   text-align: center;
+  font-weight: 800;
   line-height: 70px;
 }
 
@@ -46,6 +48,7 @@
 .item {
   text-align: center;
   font-size: 44px;
+  font-weight: 700;
   position: absolute;
   line-height: 70px;
   letter-spacing: -0.97px;

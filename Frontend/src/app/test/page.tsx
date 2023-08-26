@@ -7,7 +7,7 @@ export default function Test() {
 
   return (
     <div>
-      <p className="font-bold">{status}</p>
+      <p className="font-bold ">{status}</p>
       <button onClick={startRecording}>Start Recording</button>
       <button onClick={stopRecording}>Stop Recording</button>
       <button onClick={resumeRecording}>resume Recording</button>

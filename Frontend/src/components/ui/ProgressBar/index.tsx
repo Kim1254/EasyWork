@@ -20,7 +20,6 @@ export default function ProgressBar({ order, length }: Props) {
     <div className={styles.progressbar_container}>
       <span>{order}</span>
       <div className={styles.bar_container}>
-        {" "}
         <div className={styles.progressbar}></div>
         <div className={`${styles.progress} ${progress}`}></div>
       </div>

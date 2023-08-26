@@ -9,12 +9,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(115 115 115 / 0.5);
+  background-color: rgb(30 30 30 / 0.5);
 }
 
 .div {
-  height: 800px;
-  width: 800px;
-  background-color: rgb(255 255 255 / var(1));
+  height: 530px;
+  width: 540px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 30px;
+  opacity: 1;
   z-index: 60;
 }

@@ -1,0 +1,59 @@
+.article {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.close {
+  position: absolute;
+  top: 40px;
+  right: 46px;
+}
+
+.content_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 117px;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  margin: 40px 0px;
+  text-align: center;
+  font-size: 20px;
+  letter-spacing: 0px;
+  color: #1e1e1e;
+  opacity: 1;
+}
+
+.check_button {
+  padding: 14px 46px;
+  letter-spacing: 0px;
+  font-size: 20px;
+  margin-bottom: 22px;
+  opacity: 1;
+  width: fit-content;
+  height: fit-content;
+  background: #7bc277 0% 0% no-repeat padding-box;
+  border-radius: 30px;
+  opacity: 1;
+  color: #fff;
+  border: none;
+  background-color: #7bc277;
+}
+
+.skip_button {
+  padding: 14px 91px;
+  letter-spacing: 0px;
+  font-size: 20px;
+  opacity: 1;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 30px;
+  opacity: 1;
+  background: #fff 0% 0% no-repeat padding-box;
+  color: #7bc277;
+  border: 1px solid #7bc277;
+}

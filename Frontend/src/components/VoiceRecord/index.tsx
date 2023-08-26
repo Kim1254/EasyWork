@@ -10,6 +10,12 @@ import PulseCircle from "../ui/PulseCircle";
 import BackgroundContainer from "../ui/BackgroundContainer";
 import ProgressBar from "../ui/ProgressBar";
 import MicIcon from "../ui/MicIcon";
+import PortalModal from "../ui/PortalModal";
+import SmallModalContainer from "../ui/SmallModalContainer";
+import NotificationModal from "../NotificationModal";
+import LoadingModal from "../LoadingModal";
+import BigModalContainer from "../ui/BigModalContainer";
+import ResultModal from "../ResultModal";
 
 export const field_list = [
   {
@@ -21,6 +27,7 @@ export const field_list = [
         <h2 className={styles.title}>이름을 알려주세요.</h2>
       </div>
     ),
+    title_text: "이름을 알려주세요. ",
   },
   {
     order: 2,
@@ -34,6 +41,7 @@ export const field_list = [
         </h2>
       </div>
     ),
+    title_text: "주소와 생년월일을 알려주세요.",
   },
   {
     order: 3,
@@ -43,6 +51,7 @@ export const field_list = [
         <h2 className={styles.title}>연락처를 알려주세요.</h2>
       </div>
     ),
+    title_text: "연락처를 알려주세요.",
   },
   {
     order: 4,
@@ -56,6 +65,7 @@ export const field_list = [
         </h2>
       </div>
     ),
+    title_text: "그동안 경험하신 일자리가 있을까요?",
   },
   {
     order: 5,
@@ -69,6 +79,7 @@ export const field_list = [
         </h2>
       </div>
     ),
+    title_text: "가지고 계신 자격증이 있다면 말씀해주세요.",
   },
   {
     order: 6,
@@ -82,33 +93,23 @@ export const field_list = [
         </h2>
       </div>
     ),
+    title_text: "본인이 어떤사람인지 자유롭게 말씀해주세요.",
   },
 ];
 
+type Result = { field: string; data: string };
+
 const VoiceRecord = () => {
-  const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl } =
+  const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl, clearBlobUrl } =
     useReactMediaRecorder({ video: false });
   const [field, setField] = useState(field_list[0]);
-  console.log("media ", status);
+  const [isRetry, setIsRetry] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResultModal, setIsResultModal] = useState(false);
+  const [isNotification, setIsNotification] = useState(false);
+  const [result, setResult] = useState<Result[]>([]);
 
-  const [notification, setNotification] = useState(false);
-  useEffect(() => {
-    let handler: ReturnType<typeof setTimeout> | undefined;
-
-    if (notification) {
-      handler = setTimeout(() => {
-        setNotification(false);
-      }, 1500);
-    }
-
-    return () => {
-      if (handler) {
-        clearTimeout(handler);
-      }
-    };
-  }, [notification]);
-
+  console.log("result", result);
   const handleRecording = () => {
     if (status === "recording") {
       pauseRecording();
@@ -119,30 +120,79 @@ const VoiceRecord = () => {
     }
   };
 
+  const handleRetry = () => {
+    stopRecording();
+    setResult((prev) => prev.filter((item) => item.field !== field.value));
+    setIsRetry(true);
+  };
+
+  useEffect(() => {
+    console.log("ee", isRetry, mediaBlobUrl);
+    if (isRetry && mediaBlobUrl) {
+      clearBlobUrl();
+      setIsRetry(false);
+    }
+  }, [isRetry, mediaBlobUrl]);
+
+  useEffect(() => {
+    console.log("check", isLoading, mediaBlobUrl);
+    if (isLoading && mediaBlobUrl) {
+      const audioFile = new File([mediaBlobUrl], `${field.value}.mp3`, { type: "audio/mp3" });
+
+      const formData = new FormData();
+      formData.append(field.value, audioFile);
+      axios
+        .post(`http://localhost:3000/api/voice`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          if (isLoading) {
+            setIsLoading(false);
+            console.log(res.data.data);
+
+            setResult((prev) => [...prev, { field: field.value, data: res.data.data as string }]);
+          } else {
+            // setIsNotification(false);
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+          setIsLoading(false);
+          setIsNotification(false);
+        });
+    }
+  }, [isLoading, mediaBlobUrl]);
+
+  const handleCloseNotification = () => {
+    setIsNotification(false);
+    setIsLoading(false);
+  };
+
+  const handleNextField = () => {
+    console.log(field);
+    setField((prev) => field_list[prev.order]);
+    setIsNotification(false);
+    setIsResultModal(false);
+    setIsLoading(false);
+    clearBlobUrl();
+  };
+
+  const handleResultModal = () => {
+    setIsResultModal(true);
+    setIsNotification(false);
+  };
+
   const handleSave = async () => {
-    // stopRecording();
-    // const audioFile = new File([recordingBlob], `${field}.mp3`, { type: "audio/mp3" });
+    stopRecording();
+
+    setIsLoading(true);
+    setIsNotification(true);
+
     // // 해당 formData를 백엔드로 전송 /api/voice (임시)
     // // formdata 처리 audioFile 데이터의 이름은 일단 voice.mp3 type은 audio/mp3
     // // 성공시 "녹음이 성공하였습니다." alert, 실패시 error ?? "녹음에 실패하였습니다." alert{
-    // setIsLoading(true);
-    // const formData = new FormData();
-    // formData.append(field, audioFile);
-    // axios
-    //   .post(`http://localhost:8000/api/voice`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setIsLoading(false);
-    //     setNotification(true);
-    //     return navigate("/resume", { state: { ...res.data } });
-    //   })
-    //   .catch(() => {
-    //     setIsLoading(false);
-    //     return navigate("/error");
-    //   });
   };
 
   // useEffect(() => {
@@ -154,6 +204,39 @@ const VoiceRecord = () => {
 
   return (
     <BackgroundContainer>
+      {isNotification && (
+        <PortalModal>
+          <SmallModalContainer>
+            <NotificationModal
+              onViewResult={handleResultModal}
+              onSkip={handleNextField}
+              isLoading={isLoading}
+              onClose={handleCloseNotification}
+            />
+          </SmallModalContainer>
+        </PortalModal>
+      )}
+      {!isNotification && isLoading && (
+        <PortalModal>
+          <SmallModalContainer>
+            <LoadingModal />
+          </SmallModalContainer>
+        </PortalModal>
+      )}
+
+      {isResultModal && !isLoading && result.find((item) => item.field === field.value)?.data && (
+        <PortalModal>
+          <BigModalContainer>
+            <ResultModal
+              onRetry={handleRetry}
+              onNext={handleNextField}
+              title={field.title_text}
+              content={result.find((item) => item.field === field.value)?.data as string}
+            />
+          </BigModalContainer>
+        </PortalModal>
+      )}
+
       <section className={styles.section}>
         <article className={styles.article}>
           <div className={styles.content_container}>
@@ -178,7 +261,7 @@ const VoiceRecord = () => {
                 </div>
 
                 <div className={styles.button_container}>
-                  <button className={styles.recorder_button} onClick={stopRecording}>
+                  <button className={styles.recorder_button} onClick={handleRetry}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -229,11 +312,13 @@ const VoiceRecord = () => {
                 </div>
               </div>
             </div>
-            <MicIcon />
+            <MicIcon pulse={status === "recording"} />
           </div>
           <div className={styles.bottom_container}>
             <ProgressBar order={field.order} length={field_list.length} />
-            <button className={styles.end_record}>녹음 끝내기</button>
+            <button className={styles.end_record} onClick={handleSave}>
+              녹음 끝내기
+            </button>
           </div>
         </article>
       </section>

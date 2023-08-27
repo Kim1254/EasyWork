@@ -7,12 +7,12 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from .models import VoiceRecord
-from .serializers import ResumeSerializer
+from .models import VoiceRecord, QuestionVoiceRecord
+from .serializers import AnswerSerializer
 from EasyWork.openai.whisper import SpeechToText
 
 # Create your views here.
-class VoiceUploadView(APIView):
+class AnswerVoiceUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
     # MultiPartParser : form-data 요청에서 파일을 파싱하는 데 사용
     # FormParser : 폼 데이터를 파싱하는 데 사용
@@ -23,17 +23,19 @@ class VoiceUploadView(APIView):
         if len(audio_dict) > 0:
             VRView=VoiceRecord()
 
-            for key, value in audio_dict.items():
-                path = default_storage.save('temp.mp3', ContentFile(value.read()))
-                tmp_file = os.path.join(settings.MEDIA_ROOT, path)
-                view_dict = parse(key, SpeechToText(tmp_file))
+            question = list(audio_dict.keys())[0]
+            audio = audio_dict[question]
 
-                for k, v in view_dict.items():
-                    setattr(VRView, k, v)
+            path = default_storage.save('temp.mp3', ContentFile(audio.read()))
+            tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+            view_dict = parse(question, SpeechToText(tmp_file))
 
-                os.remove(tmp_file)
-            resume = ResumeSerializer(VRView)
-            return Response(resume.data, status=200)
+            VRView.result = view_dict[question]
+
+            os.remove(tmp_file)
+            answer = AnswerSerializer(VRView)
+
+            return Response(answer.data, status=200)
         else:
             return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)
 
@@ -62,3 +64,23 @@ def parse(key, text):
         result = {key: {'result': text['result']}}
 
     return result
+
+
+
+class OtherVoiceUploadView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def post(self, request):
+        audio_dict = request.FILES
+        if len(audio_dict) > 0:
+            VRView=QuestionVoiceRecord()
+
+            question_audio = audio_dict['question']
+            answer_audio = audio_dict['answer']
+
+
+            #수정 필요
+
+            result = AnswerSerializer(VRView)
+            return Response(result.data, status=200)
+        else:
+            return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)

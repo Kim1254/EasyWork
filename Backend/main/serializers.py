@@ -1,15 +1,18 @@
 from rest_framework import serializers
-from .models import VoiceRecord
+from .models import VoiceRecord, QuestionVoiceRecord
 
-class ResumeSerializer(serializers.ModelSerializer):
+
+class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = VoiceRecord
         fields = [
-                'name', 
-                'birth', 
-                'place',
-                'career',
-                'phone_number',
-                'certificate',
-                'self_intro',
+                'result',
+                ]
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionVoiceRecord
+        fields = [
+                'question',
+                'answer',
                 ]

@@ -4,12 +4,12 @@ import Image from "next/image";
 
 type Props = {
   title: string;
-  content: string;
+  children: React.ReactNode;
   onRetry: () => void;
   onNext: () => void;
 };
 
-export default function ResultModal({ title, content, onNext, onRetry }: Props) {
+export default function ResultModal({ title, onNext, onRetry, children }: Props) {
   return (
     <article className={styles.article}>
       <div className={styles.title_container}>
@@ -17,7 +17,7 @@ export default function ResultModal({ title, content, onNext, onRetry }: Props) 
         <h2 className={styles.title}>{title}</h2>
       </div>
       <div className={styles.border}></div>
-      <div className={styles.content}>{content}</div>
+      <div className={styles.content}>{children}</div>
       <div className={styles.button_container}>
         <button className={styles.retry_button} onClick={onRetry}>
           재녹음하기

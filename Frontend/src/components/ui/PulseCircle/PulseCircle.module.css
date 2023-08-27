@@ -1,5 +1,4 @@
 .blob {
-  background: #caecc4;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -12,7 +11,6 @@
 }
 
 .small_blob {
-  background: #efffeb;
   border-radius: 50%;
 
   height: 284px;
@@ -38,4 +36,28 @@
   100% {
     transform: scale(1);
   }
+}
+
+.green_blob {
+  background-color: #caecc4;
+}
+
+.green_small_blob {
+  background-color: #efffeb;
+}
+
+.red_small_blob {
+  background-color: #fff1ee;
+}
+
+.red_blob {
+  background-color: #fed1cf;
+}
+
+.yellow_blob {
+  background-color: #fceaba;
+}
+
+.yellow_small_blob {
+  background-color: #fff6dc;
 }

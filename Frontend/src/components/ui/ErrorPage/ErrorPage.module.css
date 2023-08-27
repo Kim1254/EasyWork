@@ -1,0 +1,28 @@
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 241px;
+  max-width: 100%;
+  width: 100vw;
+  height: 100vh;
+}
+
+.title {
+  text-align: left;
+  margin-bottom: 12px;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  color: #1e1e1e;
+  opacity: 1;
+}
+
+.subtitle {
+  text-align: left;
+
+  font-size: 24px;
+  letter-spacing: 0.14px;
+  color: #1e1e1e;
+  opacity: 1;
+}

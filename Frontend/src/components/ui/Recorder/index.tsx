@@ -3,16 +3,16 @@ import styles from "./Recorder.module.css";
 import MicIcon from "../MicIcon";
 
 type Props = {
-  field: { title: React.ReactNode; title_text: string; value: string; order: number };
+  children: React.ReactNode;
   onRecording: () => void;
   onRetry: () => void;
   status: string;
 };
-export default function Recorder({ field, onRecording, onRetry, status }: Props) {
+export default function Recorder({ onRecording, onRetry, status, children }: Props) {
   return (
     <div className={styles.content_container}>
       <div className={styles.content}>
-        {field.title}
+        {children}
         <div className={styles.recorder_container}>
           <div className={styles.button_container}>
             <button className={styles.recorder_button} onClick={onRecording}>

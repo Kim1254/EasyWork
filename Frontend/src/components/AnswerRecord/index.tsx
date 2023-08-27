@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useReactMediaRecorder } from "react-media-recorder";
+import { useReactMediaRecorder } from "react-media-recorder-2";
 import styles from "./AnswerRecord.module.css";
 import BackgroundContainer from "../ui/BackgroundContainer";
 import ProgressBar from "../ui/ProgressBar";
@@ -94,12 +94,15 @@ export default function AnswerRecord() {
 
   const handleNextField = () => {
     console.log(field);
-    setField((prev) => field_list[prev.order]);
     setIsNotification(false);
     setIsResultModal(false);
     setIsLoading(false);
     clearBlobUrl();
-    router.push(`/resumez?page=1`);
+    if (field.order === 6) {
+      router.replace(`/resume?page=other`);
+    } else {
+      setField((prev) => field_list[prev.order]);
+    }
   };
 
   const handleResultModal = () => {
@@ -138,22 +141,21 @@ export default function AnswerRecord() {
       {isResultModal && !isLoading && result.find((item) => item.field === field.value)?.data && (
         <PortalModal>
           <BigModalContainer>
-            <ResultModal
-              onRetry={handleRetry}
-              onNext={handleNextField}
-              title={field.title_text}
-              content={result.find((item) => item.field === field.value)?.data as string}
-            />
+            <ResultModal onRetry={handleRetry} onNext={handleNextField} title={field.title_text}>
+              {result.find((item) => item.field === field.value)?.data as string}
+            </ResultModal>
           </BigModalContainer>
         </PortalModal>
       )}
 
       <section className={styles.section}>
         <article className={styles.article}>
-          <Recorder onRecording={handleRecording} onRetry={handleRetry} status={status} field={field} />
+          <Recorder onRecording={handleRecording} onRetry={handleRetry} status={status}>
+            {field.title}
+          </Recorder>
           <div className={styles.bottom_container}>
             <ProgressBar order={field.order} length={field_list.length} />
-            <button className={styles.end_record} onClick={handleSave}>
+            <button disabled={status === "idle"} className={styles.end_record} onClick={handleSave}>
               녹음 끝내기
             </button>
           </div>

@@ -1,0 +1,14 @@
+.subtitle {
+  letter-spacing: 0.14px;
+  color: #1e1e1e;
+  opacity: 1;
+  font-size: 24px;
+}
+
+.title {
+  letter-spacing: 0px;
+  color: #1e1e1e;
+  opacity: 1;
+  font-size: 40px;
+  font-weight: 800;
+}

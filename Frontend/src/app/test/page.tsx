@@ -1,10 +1,13 @@
 "use client";
+import { ResultContext } from "@/context/ResultContext";
+import { useContext } from "react";
 import { useReactMediaRecorder } from "react-media-recorder";
 
 export default function Test() {
   const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl } =
     useReactMediaRecorder({ video: false });
-
+  const { state, dispatch } = useContext(ResultContext);
+  console.log(state);
   return (
     <div>
       <p className="font-bold ">{status}</p>

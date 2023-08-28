@@ -1,16 +1,18 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./ResultResume.module.css";
 import { ResultContext } from "@/context/ResultContext";
 import makePdf from "@/utils/makePdf";
 import Webcam from "react-webcam";
+import { imageUpload } from "@/cloudinary/imageUpload";
 const videoConstraints = {
   width: 1280,
   height: 720,
   facingMode: "user",
 };
 
-export default function ResultResume() {
+export default async function ResultResume() {
+  const [imageUrl, setImageUrl] = useState(null);
   const {
     state: { result },
     dispatch,
@@ -20,9 +22,11 @@ export default function ResultResume() {
     await pdf.viewWithPdf();
   };
   const webcamRef = React.useRef<Webcam | null>(null);
-  const capture = React.useCallback(() => {
+  const capture = React.useCallback(async () => {
     const imageSrc = webcamRef.current?.getScreenshot();
     console.log(imageSrc);
+    const url = await imageUpload(imageSrc);
+    setImageUrl(url);
   }, [webcamRef]);
   return (
     <section className={styles.section}>

@@ -6,7 +6,7 @@ export default function makePdf(className: string) {
     // html to imageFile
     const paper = document.querySelector(`.${className}`) as HTMLElement;
 
-    const canvas = await html2canvas(paper, { scale: 1.5 });
+    const canvas = await html2canvas(paper);
     const imageFile = canvas.toDataURL("image/png", 1.0);
 
     return imageFile;

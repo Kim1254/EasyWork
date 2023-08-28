@@ -12,6 +12,7 @@ import axios from "axios";
 import styles from "./OtherRecord.module.css";
 import { field_list } from "@/utils/FieldList/FiledList";
 import LoadingPage from "../ui/LoadingPage";
+import ErrorPage from "../ui/ErrorPage";
 export default function OtherRecord() {
   const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl, clearBlobUrl } =
     useReactMediaRecorder({ video: false });
@@ -22,6 +23,8 @@ export default function OtherRecord() {
   const [field, setField] = useState<"question" | "answer">("question");
   const [questionBlob, setQuestionBlob] = useState<string | undefined>(undefined);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isError, setIsError] = useState(false);
+  console.log("questionblob", questionBlob, mediaBlobUrl);
   const router = useRouter();
   const {
     state: { result },
@@ -69,7 +72,7 @@ export default function OtherRecord() {
           formData.append(field, answerFile);
           setIsLoadingPage(true);
           axios
-            .post(`http://localhost:3000/api/voice`, formData, {
+            .post(`http://localhost:3000/api/voice1`, formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
@@ -86,7 +89,8 @@ export default function OtherRecord() {
               }
             })
             .catch((err) => {
-              console.log("err", err);
+              setIsResultModal(false);
+              setIsError(true);
               setIsLoading(false);
             });
         } else {
@@ -95,6 +99,18 @@ export default function OtherRecord() {
       }
     }
   }, [isLoading, mediaBlobUrl]);
+
+  useEffect(() => {
+    if (isError) {
+      const timer = setTimeout(() => {
+        setIsError(false);
+        setField("question");
+        setQuestionBlob(undefined);
+        clearBlobUrl();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isError]);
 
   const handleClose = () => {
     setIsResultModal(false);
@@ -113,10 +129,12 @@ export default function OtherRecord() {
     }
   };
 
-  if (isLoadingPage) {
-    return <LoadingPage />;
+  if (isError) {
+    return <ErrorPage />;
   } else {
-    return (
+    return isError ? (
+      <LoadingPage />
+    ) : (
       <BackgroundContainer>
         {isResultModal && !isLoading && result && (
           <PortalModal>

@@ -16,6 +16,7 @@ import { field_list } from "@/utils/FieldList/FiledList";
 import { ResultContext } from "@/context/ResultContext";
 import { useRouter } from "next/navigation";
 import Recorder from "../ui/Recorder";
+import ErrorPage from "../ui/ErrorPage";
 
 export default function AnswerRecord() {
   const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl, clearBlobUrl } =
@@ -25,6 +26,7 @@ export default function AnswerRecord() {
   const [isLoading, setIsLoading] = useState(false);
   const [isResultModal, setIsResultModal] = useState(false);
   const [isNotification, setIsNotification] = useState(false);
+  const [isError, setIsError] = useState(false);
   const router = useRouter();
   const {
     state: { result },
@@ -70,22 +72,29 @@ export default function AnswerRecord() {
           },
         })
         .then((res) => {
-          if (isLoading) {
-            setIsLoading(false);
-            console.log(res.data.data);
+          setIsLoading(false);
+          console.log(res.data.data);
 
-            dispatch({ type: "ADD_DATA", payload: { field: field.value, data: res.data.data as string } });
-          } else {
-            // setIsNotification(false);
-          }
+          dispatch({ type: "ADD_DATA", payload: { field: field.value, data: res.data.data as string } });
         })
         .catch((err) => {
           console.log("err", err);
           setIsLoading(false);
           setIsNotification(false);
+          setIsError(true);
+          clearBlobUrl();
         });
     }
   }, [isLoading, mediaBlobUrl]);
+
+  useEffect(() => {
+    if (isError) {
+      const timer = setTimeout(() => {
+        setIsError(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isError]);
 
   const handleCloseNotification = () => {
     setIsNotification(false);
@@ -116,51 +125,55 @@ export default function AnswerRecord() {
     setIsNotification(true);
   };
 
-  return (
-    <BackgroundContainer>
-      {isNotification && (
-        <PortalModal>
-          <SmallModalContainer>
-            <NotificationModal
-              onViewResult={handleResultModal}
-              onSkip={handleNextField}
-              isLoading={isLoading}
-              onClose={handleCloseNotification}
-            />
-          </SmallModalContainer>
-        </PortalModal>
-      )}
-      {!isNotification && isLoading && (
-        <PortalModal>
-          <SmallModalContainer>
-            <LoadingModal />
-          </SmallModalContainer>
-        </PortalModal>
-      )}
+  if (isError) {
+    return <ErrorPage />;
+  } else {
+    return (
+      <BackgroundContainer>
+        {isNotification && (
+          <PortalModal>
+            <SmallModalContainer>
+              <NotificationModal
+                onViewResult={handleResultModal}
+                onSkip={handleNextField}
+                isLoading={isLoading}
+                onClose={handleCloseNotification}
+              />
+            </SmallModalContainer>
+          </PortalModal>
+        )}
+        {!isNotification && isLoading && (
+          <PortalModal>
+            <SmallModalContainer>
+              <LoadingModal />
+            </SmallModalContainer>
+          </PortalModal>
+        )}
 
-      {isResultModal && !isLoading && result.find((item) => item.field === field.value)?.data && (
-        <PortalModal>
-          <BigModalContainer>
-            <ResultModal onRetry={handleRetry} onNext={handleNextField} title={field.title_text}>
-              {result.find((item) => item.field === field.value)?.data as string}
-            </ResultModal>
-          </BigModalContainer>
-        </PortalModal>
-      )}
+        {isResultModal && !isLoading && result.find((item) => item.field === field.value)?.data && (
+          <PortalModal>
+            <BigModalContainer>
+              <ResultModal onRetry={handleRetry} onNext={handleNextField} title={field.title_text}>
+                {result.find((item) => item.field === field.value)?.data as string}
+              </ResultModal>
+            </BigModalContainer>
+          </PortalModal>
+        )}
 
-      <section className={styles.section}>
-        <article className={styles.article}>
-          <Recorder onRecording={handleRecording} onRetry={handleRetry} status={status}>
-            {field.title}
-          </Recorder>
-          <div className={styles.bottom_container}>
-            <ProgressBar order={field.order} length={field_list.length} />
-            <button disabled={status === "idle"} className={styles.end_record} onClick={handleSave}>
-              녹음 끝내기
-            </button>
-          </div>
-        </article>
-      </section>
-    </BackgroundContainer>
-  );
+        <section className={styles.section}>
+          <article className={styles.article}>
+            <Recorder onRecording={handleRecording} onRetry={handleRetry} status={status}>
+              {field.title}
+            </Recorder>
+            <div className={styles.bottom_container}>
+              <ProgressBar order={field.order} length={field_list.length} />
+              <button disabled={status === "idle"} className={styles.end_record} onClick={handleSave}>
+                녹음 끝내기
+              </button>
+            </div>
+          </article>
+        </section>
+      </BackgroundContainer>
+    );
+  }
 }

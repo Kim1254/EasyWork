@@ -1,6 +1,12 @@
 # Base
 numpy
 
+# BERT
+torch>=1.3.0
+transformers~=4.32.1
+accelerate>=0.12.0
+evaluate
+
 # OpenAI/Whisper
 git+https://github.com/openai/whisper.git
 ffmpeg-python

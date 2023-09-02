@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,38 +6,89 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from .models import VoiceRecord, QuestionVoiceRecord
+from EasyWork.bert.bert import QuestionAnswering
+from .models import VoiceRecord
 from .serializers import AnswerSerializer
 from EasyWork.openai.whisper import SpeechToText
 
-# Create your views here.
+question_dict = {
+    'name' : '이름이 무엇입니까?',
+    'career' : '어디에서 얼마나 근무하였습니까?',
+    'birth' : '생년월일은 언제입니까?',
+    'place' : '어디에 거주하고 있습니까?',
+    'phone_number' : '번호가 어떻게 됩니까?',
+    'certificate' : '어떤 자격증이 있습니까?',
+    'self_intro' : '나는 어떤 사람입니까?',
+}
+
 class AnswerVoiceUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
     # MultiPartParser : form-data 요청에서 파일을 파싱하는 데 사용
     # FormParser : 폼 데이터를 파싱하는 데 사용
 
     def post(self, request):
+
         audio_dict = request.FILES
 
         if len(audio_dict) > 0:
             VRView=VoiceRecord()
 
-            question = list(audio_dict.keys())[0]
-            audio = audio_dict[question]
+            key = list(audio_dict.keys())[0]   #키 이름
+            audio = audio_dict[key]    #오디오 파일
 
             path = default_storage.save('temp.mp3', ContentFile(audio.read()))
             tmp_file = os.path.join(settings.MEDIA_ROOT, path)
-            view_dict = parse(question, SpeechToText(tmp_file))
 
-            VRView.result = view_dict[question]
+            text = SpeechToText(tmp_file)
+            print(text)
+            answer = QuestionAnswering(text, question_dict[key])
+
+            VRView.question = key
+            VRView.answer = answer
 
             os.remove(tmp_file)
-            answer = AnswerSerializer(VRView)
+            result = AnswerSerializer(VRView)
 
-            return Response(answer.data, status=200)
+            return Response(result.data, status=200)
+
         else:
             return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)
 
+
+class OtherVoiceUploadView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def post(self, request):
+
+        audio_dict = request.FILES
+
+        if len(audio_dict) > 0:
+            VRView=VoiceRecord()
+
+            question_audio = audio_dict['question']
+            answer_audio = audio_dict['answer']
+
+            question_audio_path = default_storage.save('question_temp.mp3', ContentFile(question_audio.read()))
+            question_tmp_file = os.path.join(settings.MEDIA_ROOT, question_audio_path)
+
+            answer_audio_path = default_storage.save('answer_temp.mp3', ContentFile(answer_audio.read()))
+            answer_tmp_file = os.path.join(settings.MEDIA_ROOT, answer_audio_path)
+
+            question_text = SpeechToText(question_tmp_file)
+            answer_text = SpeechToText(answer_tmp_file)
+
+            answer = QuestionAnswering(answer_text, question_text)
+
+            VRView.question = 'other'
+            VRView.answer = answer
+
+            result = AnswerSerializer(VRView)
+            return Response(result.data, status=200)
+
+        else:
+            return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)
+
+
+"""
 def parse(key, text):
     result = {}
 
@@ -64,23 +114,4 @@ def parse(key, text):
         result = {key: {'result': text['result']}}
 
     return result
-
-
-
-class OtherVoiceUploadView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
-    def post(self, request):
-        audio_dict = request.FILES
-        if len(audio_dict) > 0:
-            VRView=QuestionVoiceRecord()
-
-            question_audio = audio_dict['question']
-            answer_audio = audio_dict['answer']
-
-
-            #수정 필요
-
-            result = AnswerSerializer(VRView)
-            return Response(result.data, status=200)
-        else:
-            return Response({'message': '음성이 입력되지 않았습니다.'}, status=400)
+"""

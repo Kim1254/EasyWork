@@ -24,6 +24,6 @@ def SpeechToText(audio):
     lang = max(probs, key=probs.get)
     
     if not lang == 'ko':
-        return {'result': ''}
+        return ''
     
-    return {'result': result.text}
+    return result.text

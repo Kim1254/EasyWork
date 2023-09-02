@@ -1,7 +1,5 @@
 from django.urls import path
 from .views import AnswerVoiceUploadView, OtherVoiceUploadView
-from django.conf import settings
-from django.conf.urls.static import static
 
 app_name = "main"
 urlpatterns = [

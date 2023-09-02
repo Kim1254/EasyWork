@@ -7,7 +7,7 @@ from transformers import (
 )
 
 # Note: You should download the model of BERT-MRC and paste it into model folder
-model_name = "./model"
+model_name = "./bert_korquad"
 
 # Read Model
 config = AutoConfig.from_pretrained(model_name)

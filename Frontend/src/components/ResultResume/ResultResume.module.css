@@ -3,6 +3,8 @@
   max-width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 205px;
+
   justify-content: center;
 
   align-items: center;
@@ -14,10 +16,12 @@
 
 .pdf {
   padding: 131px;
-  height: 842px;
-  width: 100%;
-  margin: 30px;
-  background-color: white;
+  width: 1326px;
+  min-height: 1875px;
+
+  background-color: black;
+
+  /* background-color: white; */
 }
 
 .top_container {

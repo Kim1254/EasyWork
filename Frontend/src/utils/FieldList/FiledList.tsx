@@ -14,20 +14,26 @@ export const field_list = [
   },
   {
     order: 2,
-    value: "birth_place", // 나이생년월일주소
+    value: "place", // 나이생년월일주소
     title: (
       <div>
-        <h2 className={styles.title}>
-          주소와 생년월일을
-          <br />
-          알려주세요.
-        </h2>
+        <h2 className={styles.title}>주소를 알려주세요.</h2>
       </div>
     ),
-    title_text: "주소와 생년월일을 알려주세요.",
+    title_text: "주소를 알려주세요.",
   },
   {
     order: 3,
+    value: "birth",
+    title: (
+      <div>
+        <h2 className={styles.title}>생년월일을 알려주세요.</h2>
+      </div>
+    ),
+    title_text: "생년월일을 알려주세요.",
+  },
+  {
+    order: 4,
     value: "phone_number", // 폰넘버
     title: (
       <div>
@@ -37,7 +43,7 @@ export const field_list = [
     title_text: "연락처를 알려주세요.",
   },
   {
-    order: 4,
+    order: 5,
     value: "career", // 경력
     title: (
       <div>
@@ -51,7 +57,7 @@ export const field_list = [
     title_text: "그동안 경험하신 일자리가 있을까요?",
   },
   {
-    order: 5,
+    order: 6,
     value: "certificate", // 자격증,
     title: (
       <div>
@@ -65,7 +71,7 @@ export const field_list = [
     title_text: "가지고 계신 자격증이 있다면 말씀해주세요.",
   },
   {
-    order: 6,
+    order: 7,
     value: "self_intro", // 어떤사람인지
     title: (
       <div>

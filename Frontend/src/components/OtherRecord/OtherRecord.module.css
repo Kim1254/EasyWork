@@ -39,6 +39,8 @@
   display: flex;
   align-items: center;
   gap: 30px;
+  width: fit-content;
+  margin: auto;
   font-size: 20px;
   background: #7bc277 0% 0% no-repeat padding-box;
   border-radius: 41px;
@@ -67,6 +69,20 @@
   letter-spacing: 0px;
   color: #1e1e1e;
   opacity: 1;
+}
+
+.content_container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.right_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 67px;
 }
 
 .field_bar {

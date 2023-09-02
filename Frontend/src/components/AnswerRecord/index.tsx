@@ -17,6 +17,8 @@ import { ResultContext } from "@/context/ResultContext";
 import { useRouter } from "next/navigation";
 import Recorder from "../ui/Recorder";
 import ErrorPage from "../ui/ErrorPage";
+import LoadingPage from "../ui/LoadingPage";
+import MicIcon from "../ui/MicIcon";
 
 export default function AnswerRecord() {
   const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl, clearBlobUrl } =
@@ -105,9 +107,9 @@ export default function AnswerRecord() {
     console.log(field);
     setIsNotification(false);
     setIsResultModal(false);
-    setIsLoading(false);
+
     clearBlobUrl();
-    if (field.order === 6) {
+    if (field.order === 7) {
       router.replace(`/resume?page=other`);
     } else {
       setField((prev) => field_list[prev.order]);
@@ -128,7 +130,9 @@ export default function AnswerRecord() {
   if (isError) {
     return <ErrorPage />;
   } else {
-    return (
+    return isLoading && !isNotification && !isResultModal ? (
+      <LoadingPage />
+    ) : (
       <BackgroundContainer>
         {isNotification && (
           <PortalModal>
@@ -136,7 +140,6 @@ export default function AnswerRecord() {
               <NotificationModal
                 onViewResult={handleResultModal}
                 onSkip={handleNextField}
-                isLoading={isLoading}
                 onClose={handleCloseNotification}
               />
             </SmallModalContainer>
@@ -162,9 +165,12 @@ export default function AnswerRecord() {
 
         <section className={styles.section}>
           <article className={styles.article}>
-            <Recorder onRecording={handleRecording} onRetry={handleRetry} status={status}>
-              {field.title}
-            </Recorder>
+            <div className={styles.content_container}>
+              <Recorder onRecording={handleRecording} onRetry={handleRetry} status={status}>
+                {field.title}
+              </Recorder>
+              <MicIcon pulse={status === "recording"} />
+            </div>
             <div className={styles.bottom_container}>
               <ProgressBar order={field.order} length={field_list.length} />
               <button disabled={status === "idle"} className={styles.end_record} onClick={handleSave}>

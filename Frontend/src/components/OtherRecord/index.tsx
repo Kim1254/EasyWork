@@ -13,100 +13,141 @@ import styles from "./OtherRecord.module.css";
 import { field_list } from "@/utils/FieldList/FiledList";
 import LoadingPage from "../ui/LoadingPage";
 import ErrorPage from "../ui/ErrorPage";
+import MicIcon from "../ui/MicIcon";
 export default function OtherRecord() {
-  const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl, clearBlobUrl } =
-    useReactMediaRecorder({ video: false });
+  const {
+    status: questionStatus,
+    startRecording: startRecordingQuestion,
+    stopRecording: stopRecordingQuestion,
+    resumeRecording: resumeRecordingQuestion,
+    pauseRecording: pauseRecordingQuestion,
+    mediaBlobUrl: questionMediaBlobUrl,
+    clearBlobUrl: clearQuestionBlobUrl,
+  } = useReactMediaRecorder({ video: false });
 
-  const [isRetry, setIsRetry] = useState(false);
+  const {
+    status: answerStatus,
+    startRecording: startRecordingAnswer,
+    stopRecording: stopRecordingAnswer,
+    resumeRecording: resumeRecordingAnswer,
+    pauseRecording: pauseRecordingAnswer,
+    mediaBlobUrl: answerMediaBlobUrl,
+    clearBlobUrl: clearAnswerBlobUrl,
+  } = useReactMediaRecorder({ video: false });
+
+  const [isQuestionRetry, setIsQuestionRetry] = useState(false);
+  const [isAnswerRetry, setIsAnswerRetry] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isResultModal, setIsResultModal] = useState(false);
-  const [field, setField] = useState<"question" | "answer">("question");
-  const [questionBlob, setQuestionBlob] = useState<string | undefined>(undefined);
-  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
   const [isError, setIsError] = useState(false);
-  console.log("questionblob", questionBlob, mediaBlobUrl);
+  console.log("status", questionStatus, answerStatus);
   const router = useRouter();
   const {
     state: { result },
     dispatch,
   } = useContext(ResultContext);
-  console.log("result", result);
-  const handleRecording = () => {
-    if (status === "recording") {
-      pauseRecording();
-    } else if (status === "paused") {
-      resumeRecording();
+  const handleQuestionRecording = () => {
+    if (questionStatus === "recording") {
+      pauseRecordingQuestion();
+    } else if (questionStatus === "paused") {
+      resumeRecordingQuestion();
     } else {
-      startRecording();
+      if (answerStatus !== "idle") {
+        stopRecordingAnswer();
+      }
+      startRecordingQuestion();
     }
   };
 
-  const handleRetry = () => {
-    stopRecording();
+  const handleAnswerRecording = () => {
+    if (answerStatus === "recording") {
+      pauseRecordingAnswer();
+    } else if (answerStatus === "paused") {
+      resumeRecordingAnswer();
+    } else {
+      if (questionStatus !== "idle") {
+        stopRecordingQuestion();
+      }
+      startRecordingAnswer();
+    }
+  };
+
+  const handleQuestionRetry = () => {
+    stopRecordingQuestion();
     //setResult((prev) => prev.filter((item) => item.field !== field.value));
 
-    setIsRetry(true);
+    setIsQuestionRetry(true);
+  };
+
+  const handleAnswerRetry = () => {
+    stopRecordingAnswer();
+    //setResult((prev) => prev.filter((item) => item.field !== field.value));
+
+    setIsAnswerRetry(true);
   };
 
   useEffect(() => {
-    console.log("ee", isRetry, mediaBlobUrl);
-    if (isRetry && mediaBlobUrl) {
-      clearBlobUrl();
-      setIsRetry(false);
+    if (isQuestionRetry && questionMediaBlobUrl) {
+      clearQuestionBlobUrl();
+      setIsQuestionRetry(false);
     }
-  }, [isRetry, mediaBlobUrl]);
+  }, [isQuestionRetry, questionMediaBlobUrl]);
 
   useEffect(() => {
-    console.log("check", isLoading, mediaBlobUrl);
-    if (isLoading && mediaBlobUrl) {
-      if (field === "question") {
-        setQuestionBlob(mediaBlobUrl);
-        setIsRetry(true);
-        setField("answer");
-      } else {
-        if (questionBlob) {
-          const questionFile = new File([questionBlob], `${"question"}.mp3`, { type: "audio/mp3" });
-          const answerFile = new File([mediaBlobUrl], `${field}.mp3`, { type: "audio/mp3" });
-          const formData = new FormData();
-          formData.append("question", questionFile);
-          formData.append(field, answerFile);
-          setIsLoadingPage(true);
-          axios
-            .post(`http://localhost:3000/api/voice1`, formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            })
-            .then((res) => {
-              if (isLoading) {
-                setIsLoading(false);
-                console.log(res.data.data);
+    if (isAnswerRetry && answerMediaBlobUrl) {
+      clearAnswerBlobUrl();
+      setIsAnswerRetry(false);
+    }
+  }, [isAnswerRetry, answerMediaBlobUrl]);
 
-                dispatch({ type: "ADD_DATA", payload: { field: "아무질문", data: res.data.data as string } });
-                router.replace("/resume?page=result");
-              } else {
-                // setIsNotification(false);
-              }
-            })
-            .catch((err) => {
-              setIsResultModal(false);
-              setIsError(true);
-              setIsLoading(false);
-            });
-        } else {
-          setField("question");
-        }
+  useEffect(() => {
+    if (isLoading && questionStatus === "stopped" && answerStatus === "stopped") {
+      if (questionMediaBlobUrl && answerMediaBlobUrl) {
+        console.log("blob", questionMediaBlobUrl, answerMediaBlobUrl);
+        const questionFile = new File([questionMediaBlobUrl], `${"question"}.mp3`, { type: "audio/mp3" });
+        const answerFile = new File([answerMediaBlobUrl], `${"answer"}.mp3`, { type: "audio/mp3" });
+        const formData = new FormData();
+        formData.append("question", questionFile);
+        formData.append("answer", answerFile);
+
+        axios
+          .post(`http://localhost:3000/api/voice`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            console.log("텟카이");
+            setIsLoading(false);
+            setIsResultModal(true);
+            clearAnswerBlobUrl();
+            clearQuestionBlobUrl();
+            dispatch({ type: "ADD_DATA", payload: { field: "아무질문", data: res.data.data as string } });
+          })
+          .catch((err) => {
+            setIsResultModal(false);
+            setIsError(true);
+            setIsLoading(false);
+            clearAnswerBlobUrl();
+            clearQuestionBlobUrl();
+          });
+      } else {
+        console.log("check");
+        setIsResultModal(false);
+        setIsError(true);
+        setIsLoading(false);
       }
     }
-  }, [isLoading, mediaBlobUrl]);
+  }, [isLoading, questionMediaBlobUrl, answerMediaBlobUrl, questionStatus, answerStatus]);
 
   useEffect(() => {
     if (isError) {
       const timer = setTimeout(() => {
         setIsError(false);
-        setField("question");
-        setQuestionBlob(undefined);
-        clearBlobUrl();
+
+        clearQuestionBlobUrl();
+        clearAnswerBlobUrl();
       }, 5000);
       return () => clearTimeout(timer);
     }
@@ -114,36 +155,27 @@ export default function OtherRecord() {
 
   const handleClose = () => {
     setIsResultModal(false);
+    router.replace("/resume?page=answer");
   };
 
-  const handleResultModal = () => {
-    setIsResultModal(true);
-  };
+  const handleSave = () => {
+    stopRecordingQuestion();
+    stopRecordingAnswer();
 
-  const handleSave = async () => {
-    stopRecording();
-    if (field === "question" && status === "idle") {
-      router.replace("/resume?page=result");
-    } else {
-      setIsLoading(true);
-    }
+    setIsLoading(true);
   };
 
   if (isError) {
     return <ErrorPage />;
   } else {
-    return isError ? (
+    return isLoading ? (
       <LoadingPage />
     ) : (
       <BackgroundContainer>
         {isResultModal && !isLoading && result && (
           <PortalModal>
             <BigModalContainer>
-              <ResultModal
-                onRetry={() => router.replace("/resume?page=answer")}
-                onNext={handleClose}
-                title={"전체 내용 확인하기"}
-              >
+              <ResultModal onRetry={() => setIsResultModal(false)} onNext={handleClose} title={"전체 내용 확인하기"}>
                 {result.map((data) => (
                   <div className={styles.field_container}>
                     <div className={styles.field_title}>
@@ -160,44 +192,43 @@ export default function OtherRecord() {
 
         <section className={styles.section}>
           <article className={styles.article}>
-            <Recorder onRecording={handleRecording} onRetry={handleRetry} status={status}>
-              <div className={styles.title}>
-                추가로 하시고 싶으신
-                <br />
-                이야기를 녹음해보세요.
+            <div className={styles.content_container}>
+              <div>
+                <Recorder
+                  paddingTop="0px"
+                  onRecording={handleQuestionRecording}
+                  onRetry={handleQuestionRetry}
+                  status={questionStatus}
+                >
+                  <div className={styles.title}>추가로 질문을 녹음해보세요.</div>
+                </Recorder>
+                <Recorder
+                  paddingTop="36px"
+                  onRecording={handleAnswerRecording}
+                  onRetry={handleAnswerRetry}
+                  status={answerStatus}
+                >
+                  <div className={styles.title}>질문에 대한 답을 녹음하세요.</div>
+                </Recorder>
               </div>
-            </Recorder>
-            <div className={styles.button_container}>
-              <button onClick={handleResultModal} className={styles.result_button}>
-                <span>전체 내용 확인하기</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="11.142" height="20.281" viewBox="0 0 11.142 20.281">
-                  <path
-                    id="패스_113"
-                    d="M-10182.84,19059.5l8.727,8.727-8.727,8.727"
-                    transform="translate(10184.254 -19058.09)"
-                    fill="none"
-                    stroke="#fff"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  />
-                </svg>
-              </button>
-              <button onClick={handleSave} className={styles.end_button}>
-                <span>녹음 끝내기</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="11.142" height="20.281" viewBox="0 0 11.142 20.281">
-                  <path
-                    id="패스_113"
-                    d="M-10182.84,19059.5l8.727,8.727-8.727,8.727"
-                    transform="translate(10184.254 -19058.09)"
-                    fill="none"
-                    stroke="#fff"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  />
-                </svg>
-              </button>
+              <div className={styles.right_container}>
+                <MicIcon pulse={status === "recording"} />
+                <button onClick={handleSave} className={styles.end_button}>
+                  <span>녹음 끝내기</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11.142" height="20.281" viewBox="0 0 11.142 20.281">
+                    <path
+                      id="패스_113"
+                      d="M-10182.84,19059.5l8.727,8.727-8.727,8.727"
+                      transform="translate(10184.254 -19058.09)"
+                      fill="none"
+                      stroke="#fff"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </article>
         </section>

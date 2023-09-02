@@ -42,25 +42,29 @@
 }
 
 .one {
-  width: calc(510px / 6);
+  width: calc(510px / 7);
 }
 
 .two {
-  width: calc(510px / 6 * 2);
+  width: calc(510px / 7 * 2);
 }
 
 .three {
-  width: calc(510px / 6 * 3);
+  width: calc(510px / 7 * 3);
 }
 
 .four {
-  width: calc(510px / 6 * 4);
+  width: calc(510px / 7 * 4);
 }
 
 .five {
-  width: calc(510px / 6 * 5);
+  width: calc(510px / 7 * 5);
 }
 
 .six {
+  width: calc(510px / 7 * 6);
+}
+
+.seven {
   width: calc(510px);
 }

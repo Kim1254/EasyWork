@@ -12,6 +12,7 @@ const progress_array = [
   { order: 4, value: styles.four },
   { order: 5, value: styles.five },
   { order: 6, value: styles.six },
+  { order: 7, value: styles.seven },
 ];
 
 export default function ProgressBar({ order, length }: Props) {

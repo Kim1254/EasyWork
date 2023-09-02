@@ -4,12 +4,12 @@ import Image from "next/image";
 
 type Props = {
   onClose: () => void;
-  isLoading: boolean;
+
   onSkip: () => void;
   onViewResult: () => void;
 };
 
-export default function NotificationModal({ onClose, isLoading, onSkip, onViewResult }: Props) {
+export default function NotificationModal({ onClose, onSkip, onViewResult }: Props) {
   console.log("check noti");
   return (
     <article className={styles.article}>
@@ -45,7 +45,7 @@ export default function NotificationModal({ onClose, isLoading, onSkip, onViewRe
         <button onClick={onViewResult} className={styles.check_button}>
           녹음 내용 확인하기
         </button>
-        <button onClick={onSkip} disabled={isLoading} className={styles.skip_button}>
+        <button onClick={onSkip} className={styles.skip_button}>
           넘어가기
         </button>
       </div>

@@ -1,0 +1,63 @@
+.blob {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 388px;
+  width: 388px;
+  filter: blur(37px);
+
+  transform: scale(1);
+}
+
+.small_blob {
+  border-radius: 50%;
+
+  height: 284px;
+  width: 284px;
+  filter: blur(40px);
+
+  transform: scale(1);
+}
+
+.active {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.green_blob {
+  background-color: #caecc4;
+}
+
+.green_small_blob {
+  background-color: #efffeb;
+}
+
+.red_small_blob {
+  background-color: #fff1ee;
+}
+
+.red_blob {
+  background-color: #fed1cf;
+}
+
+.yellow_blob {
+  background-color: #fceaba;
+}
+
+.yellow_small_blob {
+  background-color: #fff6dc;
+}

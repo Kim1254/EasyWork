@@ -1,0 +1,37 @@
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 151px;
+  max-width: 100%;
+  width: 100vw;
+  height: 100vh;
+}
+
+.suttitle {
+  text-align: left;
+
+  font-size: 24px;
+  letter-spacing: 0.14px;
+  color: #1e1e1e;
+  opacity: 1;
+}
+
+.title {
+  text-align: left;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  color: #1e1e1e;
+  opacity: 1;
+}
+
+.loading_pulse_container {
+  position: relative;
+}
+
+.loading_pulse {
+  position: absolute;
+  top: 174px;
+  left: 104px;
+}

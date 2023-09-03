@@ -14,7 +14,7 @@ export default function ResumePage() {
   return (
     <>
       {page === "answer" && <AnswerRecord />}
-      {page === "other" && <OtherRecord />}
+      {/* {page === "other" && <OtherRecord />} */}
       {page === "result" && <ResultResume />}
 
       {/* <p>{status}</p>

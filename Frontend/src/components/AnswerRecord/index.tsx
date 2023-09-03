@@ -81,7 +81,7 @@ export default function AnswerRecord() {
       const formData = new FormData();
       formData.append(field.value, audioFile);
       axios
-        .post(`http://localhost:3000/api/voice`, formData, {
+        .post(`http://localhost:8000/api/voice/answer`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -89,8 +89,10 @@ export default function AnswerRecord() {
         .then((res) => {
           setIsLoading(false);
           console.log(res.data.data);
-
-          dispatch({ type: "ADD_DATA", payload: { field: field.value, data: res.data.data as string } });
+          dispatch({ type: "ADD_DATA", payload: { field: res.data.question, data: res.data.answer as string } });
+          if (field.order === 7) {
+            setIsResultModal(true);
+          }
         })
         .catch((err) => {
           console.log("err", err);
@@ -123,7 +125,7 @@ export default function AnswerRecord() {
 
     clearBlobUrl();
     if (field.order === 7) {
-      router.replace(`/resume?page=other`);
+      router.replace(`/resume?page=result`);
     } else {
       setField((prev) => field_list[prev.order]);
     }
@@ -137,7 +139,11 @@ export default function AnswerRecord() {
   const handleSave = async () => {
     stopRecording();
     setIsLoading(true);
-    setIsNotification(true);
+
+    if (field.order === 7) {
+    } else {
+      setIsNotification(true);
+    }
   };
 
   if (isError) {
@@ -166,15 +172,39 @@ export default function AnswerRecord() {
           </PortalModal>
         )}
 
-        {isResultModal && !isLoading && result.find((item) => item.field === field.value)?.data && (
-          <PortalModal>
-            <BigModalContainer>
-              <ResultModal onRetry={handleResultRetry} onNext={handleNextField} title={field.title_text}>
-                {result.find((item) => item.field === field.value)?.data as string}
-              </ResultModal>
-            </BigModalContainer>
-          </PortalModal>
-        )}
+        {isResultModal &&
+          !isLoading &&
+          result.find((item) => item.field === field.value)?.data &&
+          field.order !== 7 && (
+            <PortalModal>
+              <BigModalContainer>
+                <ResultModal onRetry={handleResultRetry} onNext={handleNextField} title={field.title_text}>
+                  {result.find((item) => item.field === field.value)?.data as string}
+                </ResultModal>
+              </BigModalContainer>
+            </PortalModal>
+          )}
+
+        {isResultModal &&
+          !isLoading &&
+          result.find((item) => item.field === field.value)?.data &&
+          field.order === 7 && (
+            <PortalModal>
+              <BigModalContainer>
+                <ResultModal onRetry={handleResultModal} onNext={handleNextField} title={"전체 내용 확인하기"}>
+                  {result.map((data) => (
+                    <div className={styles.field_container}>
+                      <div className={styles.field_title}>
+                        {field_list.find((field) => field.value === data.field)?.title_text ?? data.field}
+                      </div>
+                      <div className={styles.field_bar}></div>
+                      <div className={styles.field_content}>{data.data}</div>
+                    </div>
+                  ))}
+                </ResultModal>
+              </BigModalContainer>
+            </PortalModal>
+          )}
 
         <section className={styles.section}>
           <article className={styles.article}>

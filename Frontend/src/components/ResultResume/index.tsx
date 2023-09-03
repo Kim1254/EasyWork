@@ -37,6 +37,9 @@ export default function ResultResume() {
   const [isPdf, setIsPdf] = useState(false);
   const [isPrint, setIsPrint] = useState(false);
   const pdf = makePdf(styles.pdf);
+
+  console.log((!imageUrl && !isWebcam) || !isResult);
+
   const onPrint = useReactToPrint({
     content: () => {
       if (printRef.current) {
@@ -144,19 +147,18 @@ export default function ResultResume() {
             ) : (
               <Image src={"/images/default_picture.svg"} alt="기본 프로필 사진입니다." height={274} width={227} />
             )}
-            {(!imageUrl && !isWebcam) ||
-              (!isResult && (
-                <div className={styles.camera_container}>
-                  <button className={styles.camera_button} onClick={() => fileRef.current?.click()}>
-                    <input type="file" onChange={addImage} ref={fileRef} className="hidden" />
-                    사진 첨부하기
-                  </button>
+            {!imageUrl && !isWebcam && !isResult && (
+              <div className={styles.camera_container}>
+                <button className={styles.camera_button} onClick={() => fileRef.current?.click()}>
+                  <input type="file" onChange={addImage} ref={fileRef} className="hidden" />
+                  사진 첨부하기
+                </button>
 
-                  <button onClick={capture} className={styles.camera_button}>
-                    캠으로 촬영하기
-                  </button>
-                </div>
-              ))}
+                <button onClick={capture} className={styles.camera_button}>
+                  캠으로 촬영하기
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.introduce}>안녕하세요. {resultObject.name} 입니다.</div>
@@ -172,18 +174,10 @@ export default function ResultResume() {
         </div>
         <div className={styles.bar}></div>
         <div className={styles.content}>
-          <div className={styles.content_title}>기타</div>
+          <div className={styles.content_title}>자기소개</div>
           <div>{resultObject.self_intro}</div>
         </div>
-        {result.length > 7 && (
-          <>
-            <div className={styles.bar}></div>
-            <div className={styles.content}>
-              <div className={styles.content_title}>{result[result.length - 1].field}</div>
-              <div>{result[result.length - 1].data}</div>
-            </div>
-          </>
-        )}
+
         <div className={styles.bar}></div>
       </div>
       <div className={styles.bottom_container}>

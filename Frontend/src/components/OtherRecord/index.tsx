@@ -75,14 +75,12 @@ export default function OtherRecord() {
 
   const handleQuestionRetry = () => {
     stopRecordingQuestion();
-    //setResult((prev) => prev.filter((item) => item.field !== field.value));
 
     setIsQuestionRetry(true);
   };
 
   const handleAnswerRetry = () => {
     stopRecordingAnswer();
-    //setResult((prev) => prev.filter((item) => item.field !== field.value));
 
     setIsAnswerRetry(true);
   };
@@ -155,14 +153,29 @@ export default function OtherRecord() {
 
   const handleClose = () => {
     setIsResultModal(false);
-    router.replace("/resume?page=answer");
+    router.replace("/resume?page=result");
   };
 
   const handleSave = () => {
-    stopRecordingQuestion();
-    stopRecordingAnswer();
+    if (questionStatus === "idle" && answerStatus === "idle") {
+      setIsResultModal(true);
+    } else {
+      stopRecordingQuestion();
+      stopRecordingAnswer();
 
-    setIsLoading(true);
+      setIsLoading(true);
+    }
+  };
+
+  const hanldeCloseResultModal = () => {
+    setIsResultModal(false);
+    const payload = result[result.length - 1];
+
+    dispatch({ type: "DELETE_DATA", payload: payload });
+
+    // setIsQuestionRetry(true);
+
+    // setIsAnswerRetry(true);
   };
 
   if (isError) {
@@ -175,11 +188,11 @@ export default function OtherRecord() {
         {isResultModal && !isLoading && result && (
           <PortalModal>
             <BigModalContainer>
-              <ResultModal onRetry={() => setIsResultModal(false)} onNext={handleClose} title={"전체 내용 확인하기"}>
+              <ResultModal onRetry={hanldeCloseResultModal} onNext={handleClose} title={"전체 내용 확인하기"}>
                 {result.map((data) => (
                   <div className={styles.field_container}>
                     <div className={styles.field_title}>
-                      {field_list.find((field) => field.value === data.field)?.title_text ?? "error"}
+                      {field_list.find((field) => field.value === data.field)?.title_text ?? data.field}
                     </div>
                     <div className={styles.field_bar}></div>
                     <div className={styles.field_content}>{data.data}</div>

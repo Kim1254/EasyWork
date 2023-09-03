@@ -48,7 +48,16 @@ export default function AnswerRecord() {
   const handleRetry = () => {
     stopRecording();
     //setResult((prev) => prev.filter((item) => item.field !== field.value));
-    dispatch({ type: "RESET" });
+
+    setIsRetry(true);
+  };
+
+  const handleResultRetry = () => {
+    setIsResultModal(false);
+    const payload = result.find((item) => item.field === field.value);
+    if (payload) {
+      dispatch({ type: "DELETE_DATA", payload: payload });
+    }
     setIsRetry(true);
   };
 
@@ -59,6 +68,10 @@ export default function AnswerRecord() {
       setIsRetry(false);
     }
   }, [isRetry, mediaBlobUrl]);
+
+  useEffect(() => {
+    dispatch({ type: "RESET" });
+  }, []);
 
   useEffect(() => {
     console.log("check", isLoading, mediaBlobUrl);
@@ -156,7 +169,7 @@ export default function AnswerRecord() {
         {isResultModal && !isLoading && result.find((item) => item.field === field.value)?.data && (
           <PortalModal>
             <BigModalContainer>
-              <ResultModal onRetry={handleRetry} onNext={handleNextField} title={field.title_text}>
+              <ResultModal onRetry={handleResultRetry} onNext={handleNextField} title={field.title_text}>
                 {result.find((item) => item.field === field.value)?.data as string}
               </ResultModal>
             </BigModalContainer>

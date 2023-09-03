@@ -3,6 +3,8 @@ import ffmpeg
 import torch, whisper
 
 model = whisper.load_model('base')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = model.to(device)
 
 # Check detailed information on: https://github.com/openai/whisper#python-usage
 def SpeechToText(audio):
@@ -22,6 +24,6 @@ def SpeechToText(audio):
     lang = max(probs, key=probs.get)
     
     if not lang == 'ko':
-        return {'result': ''}
+        return ''
     
-    return {'result': result.text}
+    return result.text

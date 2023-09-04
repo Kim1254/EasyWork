@@ -74,33 +74,46 @@ export default function AnswerRecord() {
   }, []);
 
   useEffect(() => {
-    console.log("check", isLoading, mediaBlobUrl);
-    if (isLoading && mediaBlobUrl) {
-      const audioFile = new File([mediaBlobUrl], `${field.value}.mp3`, { type: "audio/mp3" });
+    async function urlToBlob(blobUrl: string) {
+      try {
+        console.log("knock knock");
+        const response = await fetch(blobUrl);
+        if (!response.ok) {
+          throw new Error(`Fetch failed with status ${response.status}`);
+        }
+        const audioBlob = await response.blob();
+        console.log("blob", audioBlob);
 
-      const formData = new FormData();
-      formData.append(field.value, audioFile);
-      axios
-        .post(`http://localhost:8000/api/voice/answer`, formData, {
+        const audioFile = new File([audioBlob], `${field.value}.mp3`, { type: "audio/mp3" });
+
+        const formData = new FormData();
+        formData.append(field.value, audioFile);
+
+        const res = await axios.post(`http://127.0.0.1:8000/api/voice/answer`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        })
-        .then((res) => {
-          setIsLoading(false);
-          console.log(res.data.data);
-          dispatch({ type: "ADD_DATA", payload: { field: res.data.question, data: res.data.answer as string } });
-          if (field.order === 7) {
-            setIsResultModal(true);
-          }
-        })
-        .catch((err) => {
-          console.log("err", err);
-          setIsLoading(false);
-          setIsNotification(false);
-          setIsError(true);
-          clearBlobUrl();
         });
+
+        setIsLoading(false);
+        console.log(res.data.data);
+        dispatch({ type: "ADD_DATA", payload: { field: res.data.question, data: res.data.answer as string } });
+        if (field.order === 7) {
+          setIsResultModal(true);
+        }
+      } catch (err) {
+        console.error("err", err);
+        setIsLoading(false);
+        setIsNotification(false);
+        setIsError(true);
+        clearBlobUrl();
+      }
+    }
+
+    console.log("check", isLoading, mediaBlobUrl);
+    if (isLoading && mediaBlobUrl) {
+      console.log("knock");
+      urlToBlob(mediaBlobUrl);
     }
   }, [isLoading, mediaBlobUrl]);
 

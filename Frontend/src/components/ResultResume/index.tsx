@@ -9,8 +9,8 @@ import Image from "next/image";
 import { useReactToPrint } from "react-to-print";
 import { useRouter } from "next/navigation";
 const videoConstraints = {
-  width: 1280,
-  height: 720,
+  width: 224,
+  height: 276,
   facingMode: "user",
 };
 
@@ -84,12 +84,12 @@ export default function ResultResume() {
   const webcamRef = React.useRef<Webcam | null>(null);
   const capture = React.useCallback(async () => {
     const imageSrc = webcamRef.current?.getScreenshot();
-    const file = new File([imageSrc as string], "cam_picture.jpeg", { type: "image/jpeg" });
+    const file = new File([imageSrc as string], "cam_picture.jpg", { type: "image/jpg" });
     console.log(file);
     const url = await imageUpload(file);
     setImageUrl(url);
     console.log(url);
-    setImageUrl(url);
+    setIsWebcam(false);
   }, [webcamRef]);
   const addImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -139,7 +139,8 @@ export default function ResultResume() {
               <Webcam
                 audio={false}
                 height={276}
-                screenshotFormat="image/jpeg"
+                minScreenshotHeight={276}
+                screenshotFormat="image/png"
                 width={224}
                 ref={webcamRef}
                 videoConstraints={videoConstraints}
@@ -154,8 +155,19 @@ export default function ResultResume() {
                   사진 첨부하기
                 </button>
 
-                <button onClick={capture} className={styles.camera_button}>
+                <button onClick={() => setIsWebcam(true)} className={styles.camera_button}>
                   캠으로 촬영하기
+                </button>
+              </div>
+            )}
+            {isWebcam && (
+              <div className={styles.webcam_container}>
+                <button className={styles.camera_button} onClick={capture}>
+                  캡처하기
+                </button>
+
+                <button onClick={() => setIsWebcam(false)} className={styles.camera_button}>
+                  취소하기
                 </button>
               </div>
             )}

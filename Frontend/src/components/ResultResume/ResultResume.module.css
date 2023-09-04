@@ -88,6 +88,15 @@
   left: 16px;
 }
 
+.webcam_container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  bottom: -150px;
+  left: 16px;
+}
+
 .camera_button {
   width: 193px;
   height: 60px;

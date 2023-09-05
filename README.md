@@ -1,7 +1,7 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=EASY%20WORK&fontSize=90&animation=fadeIn&fontAlignY=38&desc=목소리로%20만든%20이력서%20,%20"이지웍"&descAlignY=58&descAlign=62)
 
-> ## EasyWork
->
+## About Service 이지웍(EASY WORK)
+> 디지털 환경 사용이 어려운 분들을 위한 목소리로 만드는 이력서
 > 사회적 약자를 위한 이력 관리 시스템
 
 ---

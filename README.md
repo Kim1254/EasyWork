@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=EASY%20WORK&fontSize=90&animation=fadeIn&fontAlignY=38&desc=목소리로%20만든%20이력서%20,%20"이지웍(EasyWork)"&descAlignY=58&descAlign=62)
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=EASY%20WORK&fontSize=90&animation=fadeIn&fontAlignY=38&desc=목소리로%20만드는%20이력서%20,%20"이지웍(EasyWork)"&descAlignY=58&descAlign=62)
 
 ## 📃 About 이지웍(EasyWork)
 > 디지털 환경 사용이 어려운 분들을 위한 목소리로 만드는 이력서 <br>

@@ -1,14 +1,36 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=EASY%20WORK&fontSize=90&animation=fadeIn&fontAlignY=38&desc=목소리로%20만든%20이력서%20,%20"이지웍"&descAlignY=58&descAlign=62)
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=EASY%20WORK&fontSize=90&animation=fadeIn&fontAlignY=38&desc=목소리로%20만든%20이력서%20,%20"이지웍(EasyWork)"&descAlignY=58&descAlign=62)
 
-## About Service 이지웍(EASY WORK)
+## 📃 About 이지웍(EasyWork)
 > 디지털 환경 사용이 어려운 분들을 위한 목소리로 만드는 이력서 <br>
 > 사회적 약자를 위한 이력 관리 시스템 <br>
 
----
+이지웍에서는 목소리만으로 누구나 이력서 작성을 쉽게 할 수 있어요!
 
-## 개발 환경 구성
+## 👋 Team EasyWork
 
-### 프론트엔드(React) 구성
+#### Proudct Manager🎨
+| Name                                         | Major           | Email                |
+| -------------------------------------------- | --------------  | -------------------- |
+| 윤혜진   | 신한대 산업디자인학과 | milkisforyou@naver.com |
+
+#### Developer💻
+| Name                                         | Major            | Email                |
+| -------------------------------------------- | --------------  | ----------------------- |
+| [김경민](https://github.com/KyeongMin5307)   | 가천대학교 AI•소프트웨어학부(소프트웨어전공)  | k001202@gachon.ac.kr |
+| [남동우](https://github.com/udonehn) | 삼육대학교 컴퓨터공학부    | udonehn@gmail.com |
+| [박건상](https://github.com/mayrang) | 한밭대학교 모바일융합공학과   | pkss0626@naver.com |
+| [박영신](https://github.com/dudtlstm) | 동국대학교 컴퓨터공학전공   | 2022110233@dgu.ac.kr |
+
+## 🛠️ 개발 환경 구성
+
+#### Tech Stack
+- Front-End Framework : React, Next.js
+- Back-End Framework : Django
+- 개발 언어 : TypeScript, Python
+- 인공지능 : OpenAI/Whisper, BERT
+
+
+#### 프론트엔드(React) 구성
 
 - npm: 9.5.1
 
@@ -19,7 +41,7 @@
   npm -i
   ```
 
-### 백엔드(Django) 구성
+#### 백엔드(Django) 구성
 
 - Python: 3.9.0 이상
 - Django: 4.1.2 이상
@@ -52,16 +74,16 @@
   
 ---
 
-## 서버 실행
+## 💻 서버 실행
 
-### 백엔드
+#### 백엔드
 
   ```bash
   cd ${PATH_TO_EASYWORK}/Backend
   python manage.py runserver
   ```
 
-### 프론트엔드
+#### 프론트엔드
 
   ```bash
   cd ${PATH_TO_EASYWORK}/Frontend
@@ -70,9 +92,9 @@
 
 ---
 
-## 사용 오픈소스 목록
+## 📎 사용 오픈소스 목록
 
-### 백엔드
+#### 백엔드
 
 - [OpenAI/Whisper](https://github.com/openai/whisper)
 - [klue/bert-base](https://huggingface.co/klue/bert-base)
@@ -80,7 +102,7 @@
 - [Django](https://github.com/django/django)
 - [Django Rest Framework](https://github.com/encode/django-rest-framework)
 
-### 프론트엔드
+#### 프론트엔드
 
 - [samhirtarif/react-audio-voice-recorder](https://github.com/samhirtarif/react-audio-recorder)
 - [tailwindcss](https://tailwindcss.com/)

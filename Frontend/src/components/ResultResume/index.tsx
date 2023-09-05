@@ -15,30 +15,32 @@ const videoConstraints = {
 };
 
 export default function ResultResume() {
+  const [isWebcam, setIsWebcam] = useState(false);
+  const [isResult, setIsResult] = useState(false);
+  const [isPdf, setIsPdf] = useState(false);
+  const [isPrint, setIsPrint] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
+
   const printRef = useRef<HTMLDivElement | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
+  const webcamRef = React.useRef<Webcam | null>(null);
+
   const router = useRouter();
   const {
     state: { result },
     dispatch,
   } = useContext(ResultContext);
-  if (result.length < 7) {
-    router.replace("/resume");
-  }
+  // if (result.length < 7) {
+  //   router.replace("/resume");
+  // }
   const resultObject: { [key: string]: string } = {};
 
   result.forEach(function (item) {
     resultObject[item.field] = item.data;
   });
   console.log(resultObject);
-  const [isWebcam, setIsWebcam] = useState(false);
-  const [isResult, setIsResult] = useState(false);
-  const [isPdf, setIsPdf] = useState(false);
-  const [isPrint, setIsPrint] = useState(false);
-  const pdf = makePdf(styles.pdf);
 
-  console.log((!imageUrl && !isWebcam) || !isResult);
+  const pdf = makePdf(styles.pdf);
 
   const onPrint = useReactToPrint({
     content: () => {
@@ -81,8 +83,23 @@ export default function ResultResume() {
     setIsResult(true);
     setIsPrint(true);
   };
-  const webcamRef = React.useRef<Webcam | null>(null);
-  const capture = React.useCallback(async () => {
+
+  const handleWebcam = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        // 성공적으로 스트림을 얻었으므로 웹캠이 있다고 간주
+        setIsWebcam(true);
+        // 스트림 사용이 끝나면 해제
+        stream.getTracks().forEach((track) => track.stop());
+      })
+      .catch((error) => {
+        // 사용자가 권한을 거부하거나 웹캠을 사용할 수 없음
+        setIsWebcam(false);
+      });
+  };
+
+  const handleCapture = React.useCallback(async () => {
     const imageSrc = webcamRef.current?.getScreenshot();
     const file = new File([imageSrc as string], "cam_picture.jpg", { type: "image/jpg" });
     console.log(file);
@@ -91,7 +108,7 @@ export default function ResultResume() {
     console.log(url);
     setIsWebcam(false);
   }, [webcamRef]);
-  const addImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAddImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const url = await imageUpload(e.target.files[0]);
       console.log(url);
@@ -151,18 +168,18 @@ export default function ResultResume() {
             {!imageUrl && !isWebcam && !isResult && (
               <div className={styles.camera_container}>
                 <button className={styles.camera_button} onClick={() => fileRef.current?.click()}>
-                  <input type="file" onChange={addImage} ref={fileRef} className="hidden" />
+                  <input type="file" onChange={handleAddImage} ref={fileRef} className="hidden" />
                   사진 첨부하기
                 </button>
 
-                <button onClick={() => setIsWebcam(true)} className={styles.camera_button}>
+                <button onClick={handleWebcam} className={styles.camera_button}>
                   캠으로 촬영하기
                 </button>
               </div>
             )}
             {isWebcam && (
               <div className={styles.webcam_container}>
-                <button className={styles.camera_button} onClick={capture}>
+                <button className={styles.camera_button} onClick={handleCapture}>
                   캡처하기
                 </button>
 

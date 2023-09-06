@@ -7,8 +7,6 @@ type Props = {
 
 // Modal의 Container 부분
 // children: React.ReactNode;
-// handleClose: () => void;
-
 export default function BigModalContainer({ children }: Props) {
   return (
     <section className={styles.section}>

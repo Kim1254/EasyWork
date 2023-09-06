@@ -12,6 +12,7 @@ const color_array = [
   { color: "yellow", blob: styles.yellow_blob, smallBlob: styles.yellow_small_blob },
 ];
 
+// PulseCircle 애니메이션 UI
 export default function PulseCircle({ pulse, color = "green" }: Props) {
   const colorMatch = color_array.find((item) => item.color === color);
   return (

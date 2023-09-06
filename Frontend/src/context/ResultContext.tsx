@@ -15,6 +15,12 @@ const initialState: StateType = {
   result: [],
 };
 
+// reducer
+/* 
+  ADD_DATA: 질문 결과 추가
+  DELETE_DATA: 질문 결과 하나 삭제
+  RESET: 질문 결과 초기화
+*/
 const reducer = (state: StateType, action: ActionType) => {
   switch (action.type) {
     case "ADD_DATA":
@@ -28,11 +34,13 @@ const reducer = (state: StateType, action: ActionType) => {
   }
 };
 
+// 질문에 대한 사용자 응답 결과를 저장하는 context
 export const ResultContext = createContext<{
   state: StateType;
   dispatch: Dispatch<ActionType>;
 }>({ state: initialState, dispatch: () => null });
 
+// provider
 export const ResultContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 

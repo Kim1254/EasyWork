@@ -2,6 +2,8 @@ import React from "react";
 import BackgroundContainer from "../BackgroundContainer";
 import styles from "./LoadingPage.module.css";
 import PulseCircle from "../PulseCircle";
+
+// 로딩 페이지
 export default function LoadingPage() {
   return (
     <BackgroundContainer color="yellow">

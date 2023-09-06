@@ -7,6 +7,7 @@ type Props = {
   color?: "green" | "red";
 };
 
+// 마이크 UI
 export default function MicIcon({ pulse = false, color = "green" }: Props) {
   return (
     <div className={styles.mic_container}>

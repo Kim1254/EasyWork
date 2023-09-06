@@ -1,6 +1,8 @@
 import React from "react";
 import { PulseLoader } from "react-spinners";
 import styles from "./WaitResume.module.css";
+
+// 이력서 로딩 Modal UI
 export default function WaitResume() {
   return (
     <section className={styles.section}>

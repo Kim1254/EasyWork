@@ -15,7 +15,7 @@ export default function Recorder({ onRecording, onRetry, status, children, paddi
       {children}
       <div className={styles.recorder_container}>
         <div className={styles.button_container}>
-          <button className={styles.recorder_button} onClick={onRecording}>
+          <button tabIndex={1} className={styles.recorder_button} onClick={onRecording}>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
               <ellipse
                 id="타원_56"
@@ -32,7 +32,7 @@ export default function Recorder({ onRecording, onRetry, status, children, paddi
         </div>
 
         <div className={styles.button_container}>
-          <button className={styles.recorder_button} onClick={onRetry}>
+          <button tabIndex={2} className={styles.recorder_button} onClick={onRetry}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"

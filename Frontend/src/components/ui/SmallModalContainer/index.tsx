@@ -8,7 +8,7 @@ type Props = {
 
 // Modal의 Container 부분
 // children: React.ReactNode;
-// handleClose: () => void;
+
 export default function SmallModalContainer({ children }: Props) {
   return (
     // Modal의 Container

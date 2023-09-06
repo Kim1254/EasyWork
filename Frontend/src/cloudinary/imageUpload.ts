@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// cloudinary 프로필 사진 업로드용 함수
 export const imageUpload = async (file: Blob) => {
   try {
     const formData = new FormData();

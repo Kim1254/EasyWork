@@ -21,20 +21,27 @@ import LoadingPage from "../ui/LoadingPage";
 import MicIcon from "../ui/MicIcon";
 
 export default function AnswerRecord() {
+  // 녹음 라이브러리
   const { status, startRecording, stopRecording, resumeRecording, pauseRecording, mediaBlobUrl, clearBlobUrl } =
     useReactMediaRecorder({ video: false });
+
+  // 질문 field
   const [field, setField] = useState(field_list[0]);
+
   const [isRetry, setIsRetry] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isResultModal, setIsResultModal] = useState(false);
   const [isNotification, setIsNotification] = useState(false);
   const [isError, setIsError] = useState(false);
   const router = useRouter();
+
+  // 질문 결과 state
   const {
     state: { result },
     dispatch,
   } = useContext(ResultContext);
-  console.log("result", result);
+
+  // 녹음하기 클릭 함수 (녹음 중일때는 일시정지, 일시정지일 때는 녹음 재개, 그 외에는 녹음 시작)
   const handleRecording = () => {
     if (status === "recording") {
       pauseRecording();
@@ -45,13 +52,13 @@ export default function AnswerRecord() {
     }
   };
 
+  // 재녹음 함수(녹음 종료 뒤 isRetry true로 변경)
   const handleRetry = () => {
     stopRecording();
-    //setResult((prev) => prev.filter((item) => item.field !== field.value));
-
     setIsRetry(true);
   };
 
+  // 녹음 결과 모달창에서 재녹음 하기 클릭 시 실행되는 함수(해당 질문의 결과를 지우고 isRetry true로 변경)
   const handleResultRetry = () => {
     setIsResultModal(false);
     const payload = result.find((item) => item.field === field.value);
@@ -61,28 +68,28 @@ export default function AnswerRecord() {
     setIsRetry(true);
   };
 
+  // 재녹음 버튼을 누르고 난뒤 mediaBlobUrl 초기화 뒤 isRetry false로 변경
   useEffect(() => {
-    console.log("ee", isRetry, mediaBlobUrl);
     if (isRetry && mediaBlobUrl) {
       clearBlobUrl();
       setIsRetry(false);
     }
   }, [isRetry, mediaBlobUrl]);
-
+  // 컴포넌트가 처음 실행될 때 질문 결과를 초기화
   useEffect(() => {
     dispatch({ type: "RESET" });
   }, []);
 
+  // 녹음 끝내기 클릭시 녹음 파일 전달
   useEffect(() => {
+    // mediaBlobUrl -> blob으로 변환 뒤 백엔드에 전달하는 함수
     async function urlToBlob(blobUrl: string) {
       try {
-        console.log("knock knock");
         const response = await fetch(blobUrl);
         if (!response.ok) {
           throw new Error(`Fetch failed with status ${response.status}`);
         }
         const audioBlob = await response.blob();
-        console.log("blob", audioBlob);
 
         const audioFile = new File([audioBlob], `${field.value}.mp3`, { type: "audio/mp3" });
 
@@ -95,13 +102,15 @@ export default function AnswerRecord() {
           },
         });
 
+        // 성공 시 isLoading false 후 결과 context에 추가
         setIsLoading(false);
-        console.log(res.data.data);
         dispatch({ type: "ADD_DATA", payload: { field: res.data.question, data: res.data.answer as string } });
+        // 마지막 질문이면 전체 결과 modal
         if (field.order === 7) {
           setIsResultModal(true);
         }
       } catch (err) {
+        // 에러 발생시
         console.error("err", err);
         setIsLoading(false);
         setIsNotification(false);
@@ -110,13 +119,13 @@ export default function AnswerRecord() {
       }
     }
 
-    console.log("check", isLoading, mediaBlobUrl);
+    // isLoading이 true고 녹음 내용이 있을 시 해당 함수 실행
     if (isLoading && mediaBlobUrl) {
-      console.log("knock");
       urlToBlob(mediaBlobUrl);
     }
   }, [isLoading, mediaBlobUrl]);
 
+  // 에러 발생시 5초동안 에러 페이지 표시
   useEffect(() => {
     if (isError) {
       const timer = setTimeout(() => {
@@ -126,17 +135,20 @@ export default function AnswerRecord() {
     }
   }, [isError]);
 
+  // notification 취소
   const handleCloseNotification = () => {
     setIsNotification(false);
     setIsLoading(false);
   };
 
+  // 다음 질문으로 넘어가는 함수
   const handleNextField = () => {
-    console.log(field);
     setIsNotification(false);
     setIsResultModal(false);
-
     clearBlobUrl();
+
+    //마지막 질문의 ResultModal에서 해당 함수 버튼 클릭시 결과 페이지로 이동
+    // 그 외에는 다음 질문으로 넘김
     if (field.order === 7) {
       router.replace(`/resume?page=result`);
     } else {
@@ -144,28 +156,33 @@ export default function AnswerRecord() {
     }
   };
 
+  // result modal 출력 함수
   const handleResultModal = () => {
     setIsResultModal(true);
     setIsNotification(false);
   };
 
+  // 녹음 끝내기 클릭 시 실행되는 함수
   const handleSave = async () => {
     stopRecording();
     setIsLoading(true);
 
-    if (field.order === 7) {
-    } else {
+    // 마지막 질문이 아니면 NotificationModal 출력
+    if (field.order !== 7) {
       setIsNotification(true);
     }
   };
 
   if (isError) {
+    // 에러 발생 시 에러페이지
     return <ErrorPage />;
   } else {
+    // modal 없이 isLoading 상태일때는 로딩 페이지 표시
     return isLoading && !isNotification && !isResultModal ? (
       <LoadingPage />
     ) : (
       <BackgroundContainer>
+        {/* 1~6번째 질문까지는 녹음 끝내기 클릭시 해당 modal 표시 */}
         {isNotification && (
           <PortalModal>
             <SmallModalContainer>
@@ -177,6 +194,7 @@ export default function AnswerRecord() {
             </SmallModalContainer>
           </PortalModal>
         )}
+        {/* LoadingModal */}
         {!isNotification && isLoading && (
           <PortalModal>
             <SmallModalContainer>
@@ -184,7 +202,7 @@ export default function AnswerRecord() {
             </SmallModalContainer>
           </PortalModal>
         )}
-
+        {/* 1~6번째 질문 내용 확인하기 Modal */}
         {isResultModal &&
           !isLoading &&
           result.find((item) => item.field === field.value)?.data &&
@@ -198,6 +216,7 @@ export default function AnswerRecord() {
             </PortalModal>
           )}
 
+        {/* 마지막 질문까지 끝날 때 표시하는 전체 내용 확인 Modal */}
         {isResultModal &&
           !isLoading &&
           result.find((item) => item.field === field.value)?.data &&

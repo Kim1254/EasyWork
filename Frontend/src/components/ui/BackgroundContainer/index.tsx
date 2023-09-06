@@ -7,12 +7,19 @@ type Props = {
   color?: "yellow" | "green" | "red";
 };
 
+// 물결 애니메이션
 const color_array = [
   { color: "grren", wave: "#7BC278", smallWave: "#E6EEDA" },
   { color: "yellow", wave: "#FFCC42", smallWave: "#FFE9AD" },
   { color: "red", wave: "#EF857D", smallWave: "#F3B9B4" },
 ];
 
+/* 
+배경 UI
+children: 안에 담길 컴포넌트 
+wave: 물결 애니메이션 표시 boolean (기본값: true)
+color: 물결 애니메이션 색(기본값: green)
+*/
 export default function BackgroundContainer({ children, wave = true, color = "green" }: Props) {
   const colorMatch = color_array.find((item) => item.color === color);
   return (

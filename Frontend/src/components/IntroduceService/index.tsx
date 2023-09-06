@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./IntroduceService.module.css";
 
+// 서비스 소개 섹션
 export default function IntroduceService() {
   return (
     <section className={styles.section}>

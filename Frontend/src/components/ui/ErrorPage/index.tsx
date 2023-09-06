@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./ErrorPage.module.css";
 import BackgroundContainer from "../BackgroundContainer";
 import MicIcon from "../MicIcon";
+
+// 에러 페이지
 export default function ErrorPage() {
   return (
     <BackgroundContainer color="red">

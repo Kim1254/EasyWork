@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./ServicePoint.module.css";
+
+// 서비스 특징 소개
 export default function ServicePoint() {
   return (
     <section className={styles.section}>

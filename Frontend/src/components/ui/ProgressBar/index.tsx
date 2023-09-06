@@ -15,6 +15,7 @@ const progress_array = [
   { order: 7, value: styles.seven },
 ];
 
+// 진행도 표시 UI
 export default function ProgressBar({ order, length }: Props) {
   const progress = progress_array.find((item) => item.order === order)?.value ?? "";
   return (

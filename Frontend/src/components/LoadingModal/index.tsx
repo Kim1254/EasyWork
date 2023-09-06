@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./LoadingModal.module.css";
 import Image from "next/image";
 
+// 로딩 Modal
 export default function LoadingModal() {
   return (
     <article className={styles.article}>

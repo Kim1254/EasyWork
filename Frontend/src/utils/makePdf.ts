@@ -1,6 +1,8 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
+// pdf 생성 함수
+//https://devmemory.tistory.com/98 출처
 export default function makePdf(className: string) {
   const converToImg = async () => {
     // html to imageFile
@@ -14,15 +16,12 @@ export default function makePdf(className: string) {
 
   const converToPdf = (imageFile: string) => {
     // imageFile to pdf
-
     const doc = new jsPDF("p", "mm", "a4");
 
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
 
     doc.addImage(imageFile, "JPEG", 0, 0, pageWidth, pageHeight);
-
-    // doc.save("test.pdf")
 
     window.open(doc.output("bloburl"));
 

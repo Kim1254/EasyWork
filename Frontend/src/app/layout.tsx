@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ResultContextProvider>
           <Header />
           {children}
+          {/* Modal 부분 */}
           <div id="modal"></div>
         </ResultContextProvider>
       </body>

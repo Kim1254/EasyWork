@@ -4,11 +4,17 @@ import Image from "next/image";
 
 type Props = {
   onClose: () => void;
-
   onSkip: () => void;
   onViewResult: () => void;
 };
 
+// 1~6번째 질문 페이지에서 녹음 끝내기 눌렀을 때 표시되는 modal 컴포넌트
+/*
+  onClose: 재녹음 하기 
+  onSkip: 다음 질문으로 넘어가기
+  onViewResult: 녹음 내용 확인하기
+
+*/
 export default function NotificationModal({ onClose, onSkip, onViewResult }: Props) {
   console.log("check noti");
   return (
@@ -42,10 +48,10 @@ export default function NotificationModal({ onClose, onSkip, onViewResult }: Pro
       <div className={styles.content_container}>
         <Image src={"/images/mic_green.png"} alt="마이크 아이콘" width={76} height={128} />
         <p className={styles.content}>녹음이 끝나셨나요? 말씀하신 내용을 확인할 수 있어요.</p>
-        <button onClick={onViewResult} className={styles.check_button}>
+        <button tabIndex={0} onClick={onViewResult} className={styles.check_button}>
           녹음 내용 확인하기
         </button>
-        <button onClick={onSkip} className={styles.skip_button}>
+        <button tabIndex={1} onClick={onSkip} className={styles.skip_button}>
           넘어가기
         </button>
       </div>

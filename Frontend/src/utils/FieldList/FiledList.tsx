@@ -1,5 +1,13 @@
 import styles from "./FieldList.module.css";
 
+// 질문에 대한 전반적인 내용을 담은 object 목록
+/* 
+  order: 질문 순서
+  value: 백엔드와 통신할 때 key값으로 사용하기 위한 값
+  title: 질문에 대해 설명하는 화면에 표시하기 위한 UI
+  title_text: 결과 모달등에 표시할 질문 title
+  
+*/
 export const field_list = [
   {
     order: 1,

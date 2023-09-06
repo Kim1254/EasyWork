@@ -14,6 +14,8 @@ import { field_list } from "@/utils/FieldList/FiledList";
 import LoadingPage from "../ui/LoadingPage";
 import ErrorPage from "../ui/ErrorPage";
 import MicIcon from "../ui/MicIcon";
+
+// 추가 질문 코드 (추후 추가 예정)
 export default function OtherRecord() {
   const {
     status: questionStatus,

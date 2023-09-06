@@ -138,7 +138,11 @@ export default function AnswerRecord() {
   // notification 취소
   const handleCloseNotification = () => {
     setIsNotification(false);
-    setIsLoading(false);
+    const payload = result.find((item) => item.field === field.value);
+    if (payload) {
+      dispatch({ type: "DELETE_DATA", payload: payload });
+    }
+    setIsRetry(true);
   };
 
   // 다음 질문으로 넘어가는 함수
@@ -187,6 +191,7 @@ export default function AnswerRecord() {
           <PortalModal>
             <SmallModalContainer>
               <NotificationModal
+                isLoading={isLoading}
                 onViewResult={handleResultModal}
                 onSkip={handleNextField}
                 onClose={handleCloseNotification}

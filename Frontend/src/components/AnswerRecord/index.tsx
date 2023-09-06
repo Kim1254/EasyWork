@@ -228,9 +228,9 @@ export default function AnswerRecord() {
           field.order === 7 && (
             <PortalModal>
               <BigModalContainer>
-                <ResultModal onRetry={handleResultModal} onNext={handleNextField} title={"전체 내용 확인하기"}>
+                <ResultModal onRetry={handleResultRetry} onNext={handleNextField} title={"전체 내용 확인하기"}>
                   {result.map((data) => (
-                    <div className={styles.field_container}>
+                    <div key={data.field} className={styles.field_container}>
                       <div className={styles.field_title}>
                         {field_list.find((field) => field.value === data.field)?.title_text ?? data.field}
                       </div>

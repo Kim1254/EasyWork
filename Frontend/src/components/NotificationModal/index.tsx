@@ -17,7 +17,6 @@ type Props = {
   isLoading: 녹음 저장이 됐는지 체크하는 boolean
 */
 export default function NotificationModal({ onClose, onSkip, onViewResult, isLoading }: Props) {
-  console.log("check noti");
   return (
     <article className={styles.article}>
       {/* isLoading이 false일때만 표시 */}

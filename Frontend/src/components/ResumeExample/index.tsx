@@ -21,9 +21,9 @@ export default function ResumeExample() {
             transform="translate(10184.254 -19058.09)"
             fill="none"
             stroke="#fff"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
           />
         </svg>
       </Link>

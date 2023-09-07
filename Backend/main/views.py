@@ -42,6 +42,8 @@ class AnswerVoiceUploadView(APIView):
             text = SpeechToText(tmp_file)
             print(text)
             answer = QuestionAnswering(text, question_dict[key])
+            if key == "phone_number":
+                answer = answer[:3]+"-"+answer[3:7]+"+"+answer[7:]
 
             VRView.question = key
             VRView.answer = answer

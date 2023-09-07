@@ -9,8 +9,17 @@ export default function ResumeExample() {
       <h1 className={styles.title}>
         <span className={styles.highlight}>쉬운, 이력서</span>에서 작성하세요
       </h1>
-      <Image src={"/images/resume_example.png"} alt="이력서 예시" width={1665} height={2039} />
-      <div className={styles.bottom_container}></div>{" "}
+      <div className={styles.image_container}>
+        <Image
+          src={"/images/resume_example.png"}
+          alt="이력서 예시"
+          width={1578}
+          height={2200}
+          className={styles.image}
+        />
+      </div>
+
+      <div className={styles.bottom_container}></div>
       <Link tabIndex={2} href="/resume" className={styles.resume_link}>
         <span>이력서 작성하기</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="11.142" height="20.281" viewBox="0 0 11.142 20.281">

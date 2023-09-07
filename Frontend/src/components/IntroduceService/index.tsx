@@ -10,11 +10,14 @@ export default function IntroduceService() {
       <div className={styles.flex}>
         <div className={styles.item_container}>
           <div className={styles.icon_container}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="50.216" height="55.586" viewBox="0 0 50.216 55.586">
-              <path
-                id="패스_86"
-                d="M21.263,3.774a7.536,7.536,0,0,1,13.06,0L54.569,38.918a7.536,7.536,0,0,1-6.53,11.3H7.547a7.536,7.536,0,0,1-6.53-11.3Z"
-                transform="translate(50.216) rotate(90)"
+            <svg xmlns="http://www.w3.org/2000/svg" width="55" height="54" viewBox="0 0 55 54">
+              <ellipse
+                id="타원_56"
+                cx="27"
+                cy="27.5"
+                rx="27"
+                ry="27.5"
+                transform="translate(0 54) rotate(-90)"
                 fill="#7bc277"
               />
             </svg>

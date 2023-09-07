@@ -64,3 +64,25 @@
   background-color: #7bc277;
   opacity: 1;
 }
+
+.image_container {
+  position: relative;
+  height: 1560px;
+  margin: 102px 0px;
+
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+.image {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 0 171px;
+  height: 1932px;
+
+  left: 0;
+}

@@ -1,6 +1,7 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=EASY%20WORK&fontSize=90&animation=fadeIn&fontAlignY=38&desc=목소리로%20만드는%20이력서%20,%20"이지웍(EasyWork)"&descAlignY=58&descAlign=62)
+![header](<https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=EASY%20WORK&fontSize=90&animation=fadeIn&fontAlignY=38&desc=목소리로%20만드는%20이력서%20,%20"이지웍(EasyWork)"&descAlignY=58&descAlign=62>)
 
 ## 📃 About 이지웍(EasyWork)
+
 > 디지털 환경 사용이 어려운 분들을 위한 목소리로 만드는 이력서 <br>
 > 사회적 약자를 위한 이력 관리 시스템 <br>
 
@@ -9,26 +10,28 @@
 ## 👋 Team EasyWork
 
 #### Proudct Manager🎨
-| Name                                         | Major           | Email                |
-| -------------------------------------------- | --------------  | -------------------- |
-| 윤혜진   | 신한대 산업디자인학과 | milkisforyou@naver.com |
+
+| Name   | Major                 | Email                  |
+| ------ | --------------------- | ---------------------- |
+| 윤혜진 | 신한대 산업디자인학과 | milkisforyou@naver.com |
 
 #### Developer💻
-| Name                                         | Major            | Email                |
-| -------------------------------------------- | --------------  | ----------------------- |
-| [김경민](https://github.com/KyeongMin5307)   | 가천대학교 AI•소프트웨어학부(소프트웨어전공)  | k001202@gachon.ac.kr |
-| [남동우](https://github.com/udonehn) | 삼육대학교 컴퓨터공학부    | udonehn@gmail.com |
-| [박건상](https://github.com/mayrang) | 한밭대학교 모바일융합공학과   | pkss0626@naver.com |
-| [박영신](https://github.com/dudtlstm) | 동국대학교 컴퓨터공학전공   | 2022110233@dgu.ac.kr |
+
+| Name                                       | Major                                        | Email                |
+| ------------------------------------------ | -------------------------------------------- | -------------------- |
+| [김경민](https://github.com/KyeongMin5307) | 가천대학교 AI•소프트웨어학부(소프트웨어전공) | k001202@gachon.ac.kr |
+| [남동우](https://github.com/udonehn)       | 삼육대학교 컴퓨터공학부                      | udonehn@gmail.com    |
+| [박건상](https://github.com/mayrang)       | 한밭대학교 모바일융합공학과                  | pkss0626@naver.com   |
+| [박영신](https://github.com/dudtlstm)      | 동국대학교 컴퓨터공학전공                    | 2022110233@dgu.ac.kr |
 
 ## 🛠️ 개발 환경 구성
 
 #### Tech Stack
+
 - Front-End Framework : React, Next.js
 - Back-End Framework : Django
 - 개발 언어 : TypeScript, Python
 - 인공지능 : OpenAI/Whisper, BERT
-
 
 #### 프론트엔드(React) 구성
 
@@ -54,10 +57,12 @@
   ```
 
 - BERT 모델 다운로드
+
   1. [구글 드라이브](https://drive.google.com/drive/folders/1L9vNo2M6f5SYQU2jz00fQlcW5dY5-nwR?usp=drive_link)(448MB)에서 BERT 모델을 다운로드 받습니다.
   2. 압축 해제한 파일들을 `Backend/bert_korquad` 폴더 내부로 이동합니다.
 
 - Whisper 모델 다운로드
+
   1.  [구글 드라이브](https://drive.google.com/uc?export=download&id=1u58MG-nl4_pUtMLaTHxJoztpp9YLNQvG)(278MB)에서 다운로드 받습니다.
   2.  `whisper_base.pt`를 `Backend` 폴더 내부로 이동합니다.
 
@@ -70,25 +75,26 @@
     1. 다운로드 받은 파일을 압축 해제하여 폴더 이름을 `ffmpeg`로 변경합니다.
     2. 폴더를 `C:/`에 붙여 넣습니다.
     3. **관리자 권한으로** 명령 프롬프트를 실행하여 다음 명령어를 입력합니다.
-      - `setx /M "C:/ffmpeg/bin;%PATH%"`
-  
+
+    - `setx /M "C:/ffmpeg/bin;%PATH%"`
+
 ---
 
 ## 💻 서버 실행
 
 #### 백엔드
 
-  ```bash
-  cd ${PATH_TO_EASYWORK}/Backend
-  python manage.py runserver
-  ```
+```bash
+cd ${PATH_TO_EASYWORK}/Backend
+python manage.py runserver
+```
 
 #### 프론트엔드
 
-  ```bash
-  cd ${PATH_TO_EASYWORK}/Frontend
-  npm run dev
-  ```
+```bash
+cd ${PATH_TO_EASYWORK}/Frontend
+npm run dev
+```
 
 ---
 
@@ -104,10 +110,13 @@
 
 #### 프론트엔드
 
-- [samhirtarif/react-audio-voice-recorder](https://github.com/samhirtarif/react-audio-recorder)
-- [tailwindcss](https://tailwindcss.com/)
-- [framer-motion](https://www.npmjs.com/package/framer-motion)
+- [html2canvas](npmjs.com/package/html2canvas)
 - [react-spinners](https://www.npmjs.com/package/react-spinners)
 - [axios](https://axios-http.com/kr/docs/intro)
 - [react](https://ko.legacy.reactjs.org/)
-- [react-router-dom](https://reactrouter.com/en/main)
+- [next](https://nextjs.org/)
+- [jspdf](https://www.npmjs.com/package/jspdf)
+- [swiper](https://www.npmjs.com/package/swiper)
+- [react-to-print](https://www.npmjs.com/package/react-to-print)
+- [react-webcam](https://www.npmjs.com/package/react-webcam)
+- [react-media-recorder-2](https://www.npmjs.com/package/react-media-recorder-2)
